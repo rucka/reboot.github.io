@@ -1,0 +1,308 @@
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>frontend life without Visual Studio - reboot</title>
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="frontend life without Visual Studio">
+    <meta name="twitter:description" content="">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="frontend life without Visual Studio">
+    <meta property="og:description" content="">
+
+    <link href="../favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link href="http://localhost:3001/apple-touch-icon-precomposed.png" rel="apple-touch-icon">
+
+    <link rel="stylesheet" type="text/css" href="../assets/css/uno.css?v=b5ee7c5d54">
+
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="canonical" href="http://localhost:2368/frontend-life-without-visual-studio-2/">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <link rel="amphtml" href="http://localhost:2368/frontend-life-without-visual-studio-2/amp/">
+    
+    <meta property="og:site_name" content="reboot">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="frontend life without Visual Studio">
+    <meta property="og:description" content="This post is part of the series &amp;quot;the road to Visual Studio free frontend development&amp;quot;: Frontend life with Visual Studio Frontend life without Visual Studio You can browse the code of this post on github. In the previous part I showed how to manage a pure html website">
+    <meta property="og:url" content="http://localhost:2368/frontend-life-without-visual-studio-2/">
+    <meta property="article:published_time" content="2014-07-10T10:00:00.000Z">
+    <meta property="article:modified_time" content="2015-02-25T18:22:53.000Z">
+    <meta property="article:tag" content="vsfree">
+    <meta property="article:tag" content="frontend development">
+    
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="frontend life without Visual Studio">
+    <meta name="twitter:description" content="This post is part of the series &amp;quot;the road to Visual Studio free frontend development&amp;quot;: Frontend life with Visual Studio Frontend life without Visual Studio You can browse the code of this post on github. In the previous part I showed how to manage a pure html website">
+    <meta name="twitter:url" content="http://localhost:2368/frontend-life-without-visual-studio-2/">
+    <meta name="twitter:label1" content="Written by">
+    <meta name="twitter:data1" content="Gianluca Carucci">
+    <meta name="twitter:label2" content="Filed under">
+    <meta name="twitter:data2" content="vsfree, frontend development">
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "reboot",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "http://localhost:2368/content/images/2017/10/logo.png",
+            "width": 122,
+            "height": 60
+        }
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Gianluca Carucci",
+        "image": {
+            "@type": "ImageObject",
+            "url": "http://gianluca.carucci.org/images/reboot/avatar.jpg",
+            "width": 333,
+            "height": 250
+        },
+        "url": "http://localhost:2368/author/gianluca-carucci/",
+        "sameAs": [
+            "http://gianluca.carucci.org"
+        ]
+    },
+    "headline": "frontend life without Visual Studio",
+    "url": "http://localhost:2368/frontend-life-without-visual-studio-2/",
+    "datePublished": "2014-07-10T10:00:00.000Z",
+    "dateModified": "2015-02-25T18:22:53.000Z",
+    "keywords": "vsfree, frontend development",
+    "description": "This post is part of the series &amp;quot;the road to Visual Studio free frontend development&amp;quot;: Frontend life with Visual Studio Frontend life without Visual Studio You can browse the code of this post on github. In the previous part I showed how to manage a pure html website",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "http://localhost:2368/"
+    }
+}
+    </script>
+
+    <script type="text/javascript" src="../public/ghost-sdk.min.js?v=b5ee7c5d54"></script>
+<script type="text/javascript">
+ghost.init({
+	clientId: "ghost-frontend",
+	clientSecret: "79f3dc471bf6"
+});
+</script>
+    <meta name="generator" content="Ghost 1.13">
+    <link rel="alternate" type="application/rss+xml" title="reboot" href="http://localhost:2368/rss/">
+    <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+              m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+                  ga('create', 'UA-39008722-5', 'auto');
+                    ga('send', 'pageview');
+
+                </script>
+</head>
+<body class="post-template tag-vsfree tag-frontend-development no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    <header class="panel-cover panel-cover--collapsed " style="background-image: url(../content/images/2017/10/background.jpg)">
+  <div class="panel-main">
+
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="http://reboot.carucci.org" title="link to homepage for reboot"><img src="../content/images/2017/10/logo.png" width="80" alt="reboot logo" class="panel-cover__logo logo"></a>
+        <h1 class="panel-cover__title panel-title"><a href="http://localhost:2368" title="link to homepage for reboot">reboot</a></h1>
+        <hr class="panel-cover__divider">
+        <p class="panel-cover__description">a (tech) life behind a keyboard</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary">
+
+        <div class="navigation-wrapper">
+
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="../index.html#blog" title="link to reboot blog" class="blog-button">Blog</a></li>
+            </ul>
+          </nav>
+
+          
+<nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+
+  <!-- Twitter -->
+  <li class="navigation__item">
+    <a target="blank" href="http://gianluca.carucci.org" title="rucka at home">
+      <i class="icon icon-web"></i>
+      <span class="label">Website</span>
+    </a>
+  </li>
+
+<li class="navigation__item">
+    <a target="blank" href="http://goo.gl/WCMqi5" title="@rucka on Twitter">
+      <i class="icon icon-social-twitter"></i>
+      <span class="label">Twitter</span>
+    </a>
+  </li>
+
+  <!-- Linkedin -->
+  <li class="navigation__item">
+    <a target="blank" href="http://goo.gl/pSWsZ8" title="Rucka on LinkedIn">
+      <i class="icon icon-social-linkedin"></i>
+      <span class="label">Linkedin</span>
+    </a>
+  </li>
+
+  <!-- Github -->
+  <li class="navigation__item">
+    <a target="blank" href="http://goo.gl/SzphrW" title="Rucka on Github">
+      <i class="icon icon-social-github"></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+
+    <!-- Email -->
+    <li class="navigation__item">
+      <a target="blank" href="mailto:hello.gianluca@carucci.org" title="Email me">
+        <i class="icon icon-mail"></i>
+        <span class="label">Email</span>
+      </a>
+    </li>
+
+    <!-- RSS -->
+    <li class="navigation__item">
+      <a href="../rss/index.rss" title="Subscribe">
+        <i class="icon icon-rss"></i>
+        <span class="label">RSS</span>
+      </a>
+    </li>
+
+  </ul>
+</nav>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            
+
+  <article class="post-container post-container--single">
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="10 Jul 2014" class="post-meta__date date">10 Jul 2014</time> • <span class="post-meta__tags tags"><span class="icon icon-pricetag-multiple">&amp;nbsp</span><a href="../tag/vsfree/index.html#blog" title="vsfree">vsfree</a> <a href="../tag/frontend-development/index.html#blog" title="frontend development">frontend development</a> - <span class="eta"></span> read.</span>
+        <!--<span class="post-meta__author author"><img src="http://gianluca.carucci.org/images/reboot/avatar.jpg" alt="profile image for Gianluca Carucci" class="avatar post-meta__avatar" /> by Gianluca Carucci</span>-->
+      </div>
+      <h1 class="post-title">frontend life without Visual Studio</h1>
+    </header>
+
+    <section class="post tag-vsfree tag-frontend-development">
+      <div class="kg-card-markdown"><p><em>This post is part of the series "the road to Visual Studio free frontend development":</em></p>
+<ul>
+<li><em><a href="http://localhost:3001/frontend-life-with-visual-studio">Frontend life with Visual Studio</a></em></li>
+<li><em>Frontend life without Visual Studio</em></li>
+</ul>
+<p><em>You can browse the code of this post on <a href="https://github.com/rucka/gianluca.carucci.org/blob/v2.0">github</a>.</em></p>
+<hr>
+<p>In the previous part I showed how to manage a pure html website and I spoke about the good (few) and the bad (too much) parts of web development based on Visual Studio.</p>
+<p>It's time to go back and enhance my technical requirements. I need to:</p>
+<ol>
+<li>Use a <strong>platform independent</strong> ide/editor</li>
+<li>Make the project as independent possible from the ide (no project files)</li>
+<li>Enable <strong>one click</strong> (or command) setup of my dev environment</li>
+<li>Include into the project <strong>only what I need</strong></li>
+<li>Manage <strong>simple library dependencies</strong></li>
+</ol>
+<h4 id="writethecode">write the code</h4>
+<p>Take a breath and start choosing your favourite ide/editor (for this context). Mine is vim (the reason is out of scope for now), but choose what you want: there are <strong>great, lightweight and platform independent ides</strong> out of there; if you are confused and you want something more simple than vim, take a look at <a href="http://lighttable.com">lightable</a> or <a href="https://www.jetbrains.com/webstorm/">webstorm</a>.<br>
+By choosing the (right) ide/editor I solve the first two points.</p>
+<h4 id="buildthecode">build the code</h4>
+<p>Points 3 and 4 require a task runner that automate repetitive tasks including minification, compilation and publishing of the project resources. The most famous and widly used task runner in the web development is **<a href="http://gruntjs.com/">Grunt**</a>: I will be banal and hiding myself in the crowd.</p>
+<h4 id="managedependencies">manage dependencies</h4>
+<p>Now I have only one requirement to deal with: manage the dependencies of the project. How I can fetch and install packages? Again, how I can use packages without going crazy? The First question is solved by a <em><a href="http://en.wikipedia.org/wiki/Package_manager">package manager</a></em>; the latter is solved by a <em>dependency manager</em>.<br>
+If I were banal again, I would choose <a href="http://bower.io/">Bower</a> as a package manager and <a href="http://requirejs.org/">RequireJs</a> as a dependency manager, but that's not not the case: I'm leaving a bit of suspence before speaking about the management of library dependencies because Grunt is the theme of next the post of this series....</p>
+</div>
+    </section>
+
+            <footer class="post-footer">
+
+
+            <figure class="author-image">
+                <a class="img" href="../author/gianluca-carucci/" style="background-image: url(http://gianluca.carucci.org/images/reboot/avatar.jpg)"><span class="hidden">Gianluca Carucci's Picture</span></a>
+            </figure>
+
+            <section class="author">
+                <h4><a href="../author/gianluca-carucci/">Gianluca Carucci</a></h4>
+
+                    <p>Software Engineer. Waterpolo player. Dad. Web  guy.</p>
+                <div class="author-meta">
+                    <span class="author-location icon icon-map">Milan</span>
+                    <span class="author-link icon icon-link"><a href="http://gianluca.carucci.org">http://gianluca.carucci.org</a></span>
+                </div>
+            </section>
+
+
+            <section class="share">
+                <h4>Share this post</h4>
+                <a class="icon icon-social-twitter" href="https://twitter.com/share?text=frontend%20life%20without%20Visual%20Studio&amp;url=http://reboot.carucci.org/frontend-life-without-visual-studio-2/" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <span class="hidden">Twitter</span>
+                </a>
+                <a class="icon icon-social-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://reboot.carucci.org/frontend-life-without-visual-studio-2/" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <span class="hidden">Facebook</span>
+                </a>
+                <a class="icon icon-social-google-plus" href="https://plus.google.com/share?url=http://reboot.carucci.org/frontend-life-without-visual-studio-2/" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <span class="hidden">Google+</span>
+                </a>
+            </section>
+  </footer></article>
+
+  <section class="post-comments">
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+      var disqus_shortname = 'reboot-carucci-org'; // required: replace example with your forum shortname
+      /* * * DON'T EDIT BELOW THIS LINE * * */
+      (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
+
+
+
+            <footer class="footer">
+    <span class="footer__copyright" style="float:left">© 2017. <a href="http://gianluca.carucci.org">Gianluca Carucci</a>. All rights reserved.</span>
+    <span class="footer__copyright" style="float:right">Proudly published with <a href="http://ghost.org" title="link to Ghost website">Ghost</a></span>
+</footer>
+        </div>
+    </div>
+
+    <!-- You can safely delete this line if your theme does not require jQuery -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+    <script type="text/javascript" src="../assets/js/main.js?v=b5ee7c5d54"></script>
+
+</body>

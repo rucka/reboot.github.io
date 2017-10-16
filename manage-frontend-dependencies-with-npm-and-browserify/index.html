@@ -1,0 +1,427 @@
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>manage frontend dependencies with npm and browserify - reboot</title>
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="manage frontend dependencies with npm and browserify">
+    <meta name="twitter:description" content="">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="manage frontend dependencies with npm and browserify">
+    <meta property="og:description" content="">
+
+    <link href="../favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link href="http://localhost:3001/apple-touch-icon-precomposed.png" rel="apple-touch-icon">
+
+    <link rel="stylesheet" type="text/css" href="../assets/css/uno.css?v=b5ee7c5d54">
+
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="canonical" href="http://localhost:2368/manage-frontend-dependencies-with-npm-and-browserify/">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <link rel="amphtml" href="http://localhost:2368/manage-frontend-dependencies-with-npm-and-browserify/amp/">
+    
+    <meta property="og:site_name" content="reboot">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="manage frontend dependencies with npm and browserify">
+    <meta property="og:description" content="This post is part of the series &amp;quot;the road to Visual Studio free frontend development&amp;quot;: Frontend life with Visual Studio Frontend life without Visual Studio Frontend life is easy with Grunt Manage frontend dependencies with npm and browserify You can browse the code of this post on github.">
+    <meta property="og:url" content="http://localhost:2368/manage-frontend-dependencies-with-npm-and-browserify/">
+    <meta property="article:published_time" content="2014-10-25T11:27:00.000Z">
+    <meta property="article:modified_time" content="2015-02-25T18:32:56.000Z">
+    <meta property="article:tag" content="grunt">
+    <meta property="article:tag" content="browserify">
+    <meta property="article:tag" content="vsfree">
+    <meta property="article:tag" content="frontend development">
+    
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="manage frontend dependencies with npm and browserify">
+    <meta name="twitter:description" content="This post is part of the series &amp;quot;the road to Visual Studio free frontend development&amp;quot;: Frontend life with Visual Studio Frontend life without Visual Studio Frontend life is easy with Grunt Manage frontend dependencies with npm and browserify You can browse the code of this post on github.">
+    <meta name="twitter:url" content="http://localhost:2368/manage-frontend-dependencies-with-npm-and-browserify/">
+    <meta name="twitter:label1" content="Written by">
+    <meta name="twitter:data1" content="Gianluca Carucci">
+    <meta name="twitter:label2" content="Filed under">
+    <meta name="twitter:data2" content="grunt, browserify, vsfree, frontend development">
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "reboot",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "http://localhost:2368/content/images/2017/10/logo.png",
+            "width": 122,
+            "height": 60
+        }
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Gianluca Carucci",
+        "image": {
+            "@type": "ImageObject",
+            "url": "http://gianluca.carucci.org/images/reboot/avatar.jpg",
+            "width": 333,
+            "height": 250
+        },
+        "url": "http://localhost:2368/author/gianluca-carucci/",
+        "sameAs": [
+            "http://gianluca.carucci.org"
+        ]
+    },
+    "headline": "manage frontend dependencies with npm and browserify",
+    "url": "http://localhost:2368/manage-frontend-dependencies-with-npm-and-browserify/",
+    "datePublished": "2014-10-25T11:27:00.000Z",
+    "dateModified": "2015-02-25T18:32:56.000Z",
+    "keywords": "grunt, browserify, vsfree, frontend development",
+    "description": "This post is part of the series &amp;quot;the road to Visual Studio free frontend development&amp;quot;: Frontend life with Visual Studio Frontend life without Visual Studio Frontend life is easy with Grunt Manage frontend dependencies with npm and browserify You can browse the code of this post on github.",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "http://localhost:2368/"
+    }
+}
+    </script>
+
+    <script type="text/javascript" src="../public/ghost-sdk.min.js?v=b5ee7c5d54"></script>
+<script type="text/javascript">
+ghost.init({
+	clientId: "ghost-frontend",
+	clientSecret: "79f3dc471bf6"
+});
+</script>
+    <meta name="generator" content="Ghost 1.13">
+    <link rel="alternate" type="application/rss+xml" title="reboot" href="http://localhost:2368/rss/">
+    <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+              m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+                  ga('create', 'UA-39008722-5', 'auto');
+                    ga('send', 'pageview');
+
+                </script>
+</head>
+<body class="post-template tag-grunt tag-browserify tag-vsfree tag-frontend-development no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    <header class="panel-cover panel-cover--collapsed " style="background-image: url(../content/images/2017/10/background.jpg)">
+  <div class="panel-main">
+
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="http://reboot.carucci.org" title="link to homepage for reboot"><img src="../content/images/2017/10/logo.png" width="80" alt="reboot logo" class="panel-cover__logo logo"></a>
+        <h1 class="panel-cover__title panel-title"><a href="http://localhost:2368" title="link to homepage for reboot">reboot</a></h1>
+        <hr class="panel-cover__divider">
+        <p class="panel-cover__description">a (tech) life behind a keyboard</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary">
+
+        <div class="navigation-wrapper">
+
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="../index.html#blog" title="link to reboot blog" class="blog-button">Blog</a></li>
+            </ul>
+          </nav>
+
+          
+<nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+
+  <!-- Twitter -->
+  <li class="navigation__item">
+    <a target="blank" href="http://gianluca.carucci.org" title="rucka at home">
+      <i class="icon icon-web"></i>
+      <span class="label">Website</span>
+    </a>
+  </li>
+
+<li class="navigation__item">
+    <a target="blank" href="http://goo.gl/WCMqi5" title="@rucka on Twitter">
+      <i class="icon icon-social-twitter"></i>
+      <span class="label">Twitter</span>
+    </a>
+  </li>
+
+  <!-- Linkedin -->
+  <li class="navigation__item">
+    <a target="blank" href="http://goo.gl/pSWsZ8" title="Rucka on LinkedIn">
+      <i class="icon icon-social-linkedin"></i>
+      <span class="label">Linkedin</span>
+    </a>
+  </li>
+
+  <!-- Github -->
+  <li class="navigation__item">
+    <a target="blank" href="http://goo.gl/SzphrW" title="Rucka on Github">
+      <i class="icon icon-social-github"></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+
+    <!-- Email -->
+    <li class="navigation__item">
+      <a target="blank" href="mailto:hello.gianluca@carucci.org" title="Email me">
+        <i class="icon icon-mail"></i>
+        <span class="label">Email</span>
+      </a>
+    </li>
+
+    <!-- RSS -->
+    <li class="navigation__item">
+      <a href="../rss/index.rss" title="Subscribe">
+        <i class="icon icon-rss"></i>
+        <span class="label">RSS</span>
+      </a>
+    </li>
+
+  </ul>
+</nav>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            
+
+  <article class="post-container post-container--single">
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="25 Oct 2014" class="post-meta__date date">25 Oct 2014</time> • <span class="post-meta__tags tags"><span class="icon icon-pricetag-multiple">&amp;nbsp</span><a href="../tag/grunt/index.html#blog" title="grunt">grunt</a> <a href="../tag/browserify/index.html#blog" title="browserify">browserify</a> <a href="../tag/vsfree/index.html#blog" title="vsfree">vsfree</a> <a href="../tag/frontend-development/index.html#blog" title="frontend development">frontend development</a> - <span class="eta"></span> read.</span>
+        <!--<span class="post-meta__author author"><img src="http://gianluca.carucci.org/images/reboot/avatar.jpg" alt="profile image for Gianluca Carucci" class="avatar post-meta__avatar" /> by Gianluca Carucci</span>-->
+      </div>
+      <h1 class="post-title">manage frontend dependencies with npm and browserify</h1>
+    </header>
+
+    <section class="post tag-grunt tag-browserify tag-vsfree tag-frontend-development">
+      <div class="kg-card-markdown"><p><em>This post is part of the series "the road to Visual Studio free frontend development":</em></p>
+<ul>
+<li><em><a href="http://localhost:3001/frontend-life-with-visual-studio">Frontend life with Visual Studio</a></em></li>
+<li><em><a href="http://localhost:3001/manage-frontend-dependencies-with-npm-and-browserify/frontend-life-without-visual-studio">Frontend life without Visual Studio</a></em></li>
+<li><em><a href="../frontend-life-is-easy-with-grunt.3">Frontend life is easy with Grunt</a></em></li>
+<li><em>Manage frontend dependencies with npm and browserify</em></li>
+</ul>
+<p><em>You can browse the code of this post on <a href="https://github.com/rucka/gianluca.carucci.org/blob/v2.1">github</a>.</em></p>
+<hr>
+<blockquote>
+<p>All variables should be declared before used. JavaScript does not require this, but doing so makes the program easier to read and makes it easier to detect undeclared variables that may become implied globals. Implied <a href="http://yuiblog.com/blog/2006/06/01/global-domination/">global</a> variables should never be used. Use of global variables should be minimized.</p>
+</blockquote>
+<p>As <a href="http://en.wikipedia.org/wiki/Douglas_Crockford">Duglas Crockford</a> <a href="http://javascript.crockford.com/code.html">suggests</a> the global variable default behaviour in javascript is evil, so it's safer to avoid it.</p>
+<h4 id="modulepattern">module pattern</h4>
+<p><a href="http://addyosmani.com/resources/essentialjsdesignpatterns/book/#modulepatternjavascript">Module pattern</a> in javascript is the way you make your javascript <strong>life easy</strong>. <a href="http://localhost:3001/manage-frontend-dependencies-with-npm-and-browserify/frontend-life-without-visual-studio">Previously</a> I spoke about the <em>dependencies management</em> and I mentioned <a href="http://requirejs.org/">RequireJs</a> as the most obvious tool to choose. requirejs is a library that follows <a href="http://en.wikipedia.org/wiki/Asynchronous_module_definition">AMD</a> specifications in order to manage modules in javascript.<br>
+To make a long story short, you can create your modules supporting AMD by wrapping your code within a clojure:</p>
+<pre><code>//file app.js
+define(function (require) {
+  var logger = require('./log');
+  logger.write('hello world');
+});
+
+//file log.js
+define(function () {
+  return {
+    write: function (message) {
+      console.log(message);
+    }
+  };
+});
+</code></pre>
+<p>It sounds simple, but RequireJs comes with some drawbacks: it's not so comfortable to remember wrapping every file. I know: it's only a step of your development process to remember, but we can do better. My suggestion is to choose RequireJs only if you cannot use a task manager (like Grunt), because for RequireJs a task manager isn't mandatory (I think this is its best feature).<br>
+Fortunately I have a task manager, so I go on choosing a different dependency manager.</p>
+<h4 id="commonjs">CommonJs</h4>
+<p><a href="http://en.wikipedia.org/wiki/CommonJS">CommonJs</a> is a different way to manage dependencies in JavaScript: it was created to support JavaScript on the server side (Node.js),  thanks to some libraries now you can benefit from <strong>commonjs on the client side</strong> too.<br>
+CommonJs ensures that each module hides every variable to other modules by default: in order to expose variables outside, you have to export them explicitly.</p>
+<h4 id="browserify">Browserify</h4>
+<p>The library I'm choosing to manage dependencies is <a href="http://browserify.org/"><strong>Browserify</strong></a>: it's simple and brilliant because you can write your code that requires dependencies just as well as you do in Node.js. At the build time, Browserify starts from the javascript entry point and recursively <strong>bundles up</strong> all your required modules in a <strong>single output file</strong>. The great thing is that Browserify detects all dependencies of your project for you: make available modules to Browserify (we speak about this detail in a while) and require them is the only things up to you.<br>
+For example, look at the <code>script</code> html section of my website. Before using Browserify, it was:</p>
+<pre><code>&lt;script src="vendor/html5.js" type="text/javascript"&gt;&lt;/script&gt;
+&lt;script src="vendor/jquery.js" type="text/javascript"&gt;&lt;/script&gt;
+
+&lt;script src="vendor/jquery.html5loader/animations/jquery.html5Loader.line.js" type="text/javascript"&gt;&lt;/script&gt;
+&lt;script src="vendor/jquery.html5loader/jquery.html5Loader.js" type="text/javascript"&gt;&lt;/script&gt;
+&lt;script src="scripts/loader.js" type="text/javascript"&gt;&lt;/script&gt;
+
+&lt;script src="vendor/underscore.js" type="text/javascript"&gt;&lt;/script&gt;
+&lt;script src="vendor/jquery.awesomeCloud.js" type="text/javascript"&gt;&lt;/script&gt;
+&lt;script src="vendor/jquery.knob.js" type="text/javascript"&gt;&lt;/script&gt;
+&lt;script src="vendor/jquery.scrollTo.js" type="text/javascript"&gt;&lt;/script&gt;
+&lt;script src="vendor/waypoints.js" type="text/javascript"&gt;&lt;/script&gt;
+&lt;script src="scripts/default.js" type="text/javascript"&gt;&lt;/script&gt;
+&lt;script src="scripts/ga.js" type="text/javascript"&gt;&lt;/script&gt;
+</code></pre>
+<p>but after using Browserify, I need only to declare the reference to the entry point of my app:</p>
+<pre><code>&lt;script src="app.js" type="text/javascript"&gt;&lt;/script&gt;
+</code></pre>
+<p><strong>it's awesome! Tell me how to do that!</strong><br>
+Let's start downloading the <code>grunt-browserify</code> plugin:</p>
+<pre><code>npm install grunt-browserify --save-dev
+</code></pre>
+<p>now I can modify the grunt file removing the uglify section (this job is now provided by Browserify) and add a new Browserify section to the configuration:</p>
+<pre><code>grunt.initConfig({  
+  //previous declarations...
+     browserify: {
+            main: {
+                options: {
+                    bundleOptions:{
+                        debug:true, 
+                    },
+                },
+                src : ['client/app.js'],
+                dest: 'publish/app.js'
+            }
+        }, 
+  //next declarations...
+));
+
+//previous dependencies loaded ...
+grunt.loadNpmTasks('grunt-browserify');
+grunt.registerTask('default', ['clean','copy', 'browserify']);   
+</code></pre>
+<p>This configuration tells browserify to bundle all dependencies in a single file, and it provides the source map (thanks to the <code>debug:true</code> option) so that during the debugging you inspect your application JavaScript files as splitted.</p>
+<p>The configuration is done, now I can change my app code in the Node.js way:</p>
+<pre><code>//app.js
+module.exports = appFactory();
+function appFactory() {
+    "use strict";
+    var that = {};
+    var $ = require('jquery');
+	//...
+    that.start = function() {
+        $('html').animate({ scrollTop: 0 }, 1);
+        //...
+     };   
+     //...
+     return that;
+}
+</code></pre>
+<p>To be honest, I have simplified the grunt configuration so that it's focused only on the important work done by grunt. If you take a look at the <a href="https://github.com/rucka/gianluca.carucci.org/blob/v2.1/Gruntfile.js">real code</a>, there are some interesting options for creating aliases and to make available to Browserify the not CommonJs compatible libraries (the option is called <em>shim</em>); for futher details look at <a href="https://github.com/substack/node-browserify#usage">Browserify</a> and the <a href="https://github.com/jmreidy/grunt-browserify">grunt-browserify</a> documentation.</p>
+<p><strong>What if I don't use grunt?</strong> Don't panic! <a href="http://codeofrob.com/blog.html">Rob</a> <a href="http://codeofrob.com/entries/starting-the-frameworkless-js-project.html">shows</a> shows you how to use browserify in the standalone way.</p>
+<p>A little interesting note before move on: you can <em>require</em> and use core (server) node modules in your client code; browse the <a href="http://nodejs.org/api/">node api</a> for more details and take a look at <a href="http://codeofrob.com/entries/frameworkless-js---rendering-templates.html">this example</a> where <a href="http://codeofrob.com/blog.html">Rob</a> shows how to take advantage of node api in order to render an html template without using any framework.</p>
+<h4 id="packagemanager">package manager</h4>
+<p>Ok, in both the Grunt configuration and javascript/html code there are no traces of the location of the dependencies.</p>
+<p><em>How and where I do have to place my dependencies?</em><br>
+Here is where a (client) package manager comes in.<br>
+Remember what we said some posts ago? The most widely used client package manager is <a href="http://bower.io">Bower</a>, but it will not be my choice (in this context): the reason is, I already have a package manager for the dependencies.<br>
+<em>Can I use <strong>npm</strong> for the client side dependencies as well?</em> <strong>Definitely yes</strong>! The answer to the question "Why  don't we use Bower?" is simple: one tool is better than two!<br>
+Sounds strange but most of the widespread client libraries are available in Npm.</p>
+<p>Npm comes with another great advantage when used with Browserify: CommonJs by default uses Npm as package manager, so when you need to require a dependency, the dependency resolver looks for a module located in the same directory where Npm put it (the default is under the <code>node_modules</code> directory in the root of the project). Let's go to download our client dependencies like this:</p>
+<pre><code>npm install jquery --save
+npm install underscore --save
+</code></pre>
+<p>Now, If you check the <code>package.json</code> file, you can see how  <code>devDependencies</code> section and the <code>dependencies</code> section have changed as well:</p>
+<pre><code>{
+  "name": "gianluca.carucci.org",
+  "author": "Gianluca Carucci",
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-contrib-uglify": "~0.4.0",
+    "grunt-contrib-clean": "~0.5.0",
+    "grunt-contrib-copy": "~0.5.0",
+    "grunt-browserify": "~2.0.1"
+  },
+  "dependencies": {
+    "underscore": "~1.6.0",
+    "jquery": "~2.1.0"
+  }
+}
+</code></pre>
+<p>This is how you can manage modules using Npm. If you need to require local modules from Browserify instead of default Npm modules, you have to require them using a relative path:<br>
+var mymodule = require('./../mymodule');</p>
+<h4 id="browserifyiloveyou">Browserify I love you</h4>
+<p>The only drawback of using Browserify is that you need a task manager to bundle up your JavaScript; if you have it, your life goes simple, if don't, your should choose is <a href="http://requirejs.org/">RequireJs</a>. I found Browserify useful for these reasons:</p>
+<ul>
+<li>Client side development experience is (quite) the <strong>same</strong> as the server side one (so turn developers between the server side and client side are simplee)</li>
+<li>You deliver only <strong>one JavaScript file</strong> for the application</li>
+<li>It is advantageous to use the <strong>source map</strong></li>
+<li>It is advantageous to use the <strong>Node.js server api</strong></li>
+</ul>
+<p>That's all for now. I have one more problem to solve: <em>how can I avoid running Grunt manually when a source code file changes?</em> This is the topic of the <a href="http://localhost:3001/manage-frontend-dependencies-with-npm-and-browserify/enhance-your-frontend-life-with-grunt-watch-and-livereload">next</a> post.</p>
+</div>
+    </section>
+
+            <footer class="post-footer">
+
+
+            <figure class="author-image">
+                <a class="img" href="../author/gianluca-carucci/" style="background-image: url(http://gianluca.carucci.org/images/reboot/avatar.jpg)"><span class="hidden">Gianluca Carucci's Picture</span></a>
+            </figure>
+
+            <section class="author">
+                <h4><a href="../author/gianluca-carucci/">Gianluca Carucci</a></h4>
+
+                    <p>Software Engineer. Waterpolo player. Dad. Web  guy.</p>
+                <div class="author-meta">
+                    <span class="author-location icon icon-map">Milan</span>
+                    <span class="author-link icon icon-link"><a href="http://gianluca.carucci.org">http://gianluca.carucci.org</a></span>
+                </div>
+            </section>
+
+
+            <section class="share">
+                <h4>Share this post</h4>
+                <a class="icon icon-social-twitter" href="https://twitter.com/share?text=manage%20frontend%20dependencies%20with%20npm%20and%20browserify&amp;url=http://reboot.carucci.org/manage-frontend-dependencies-with-npm-and-browserify/" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <span class="hidden">Twitter</span>
+                </a>
+                <a class="icon icon-social-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://reboot.carucci.org/manage-frontend-dependencies-with-npm-and-browserify/" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <span class="hidden">Facebook</span>
+                </a>
+                <a class="icon icon-social-google-plus" href="https://plus.google.com/share?url=http://reboot.carucci.org/manage-frontend-dependencies-with-npm-and-browserify/" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <span class="hidden">Google+</span>
+                </a>
+            </section>
+  </footer></article>
+
+  <section class="post-comments">
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+      var disqus_shortname = 'reboot-carucci-org'; // required: replace example with your forum shortname
+      /* * * DON'T EDIT BELOW THIS LINE * * */
+      (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
+
+
+
+            <footer class="footer">
+    <span class="footer__copyright" style="float:left">© 2017. <a href="http://gianluca.carucci.org">Gianluca Carucci</a>. All rights reserved.</span>
+    <span class="footer__copyright" style="float:right">Proudly published with <a href="http://ghost.org" title="link to Ghost website">Ghost</a></span>
+</footer>
+        </div>
+    </div>
+
+    <!-- You can safely delete this line if your theme does not require jQuery -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+    <script type="text/javascript" src="../assets/js/main.js?v=b5ee7c5d54"></script>
+
+</body>

@@ -1,0 +1,542 @@
+<rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/" version="2.0"><channel><title>reboot</title><description>a (tech) life behind a keyboard</description><link>http://localhost:2368/</link><image><url>http://localhost:2368/favicon.png</url><title>reboot</title><link>http://localhost:2368/</link></image><generator>Ghost 1.13</generator><lastBuildDate>Mon, 16 Oct 2017 13:29:05 GMT</lastBuildDate><atom:link href="http://localhost:2368/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title>enhance your frontend life using watch and livereload</title><description>&lt;div class="kg-card-markdown"&gt;&lt;p&gt;&lt;em&gt;This post is part of the series &amp;quot;the road to Visual Studio free frontend development&amp;quot;:&lt;/em&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;&lt;a href="http://localhost:2368/frontend-life-with-visual-studio"&gt;Frontend life with Visual Studio&lt;/a&gt;&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;&lt;a href="http://localhost:2368/frontend-life-without-visual-studio"&gt;Frontend life without Visual Studio&lt;/a&gt;&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;&lt;a href="http://localhost:2368/frontend-life-is-easy-with-grunt"&gt;Frontend life is easy with Grunt&lt;/a&gt;&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;&lt;a href="http://localhost:2368/manage-frontend-dependencies-with-npm-and-browserify"&gt;Manage frontend dependencies with npm and browserify&lt;/a&gt;&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;Enhance your frontend life with grunt watch and livereload plugin&lt;/em&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><link>http://localhost:2368/enhance-your-frontend-life-with-grunt-watch-and-livereload-2/</link><guid isPermaLink="false">59e4a44feb581d000190a37e</guid><category>grunt</category><category>vsfree</category><category>frontend development</category><category>live-reload</category><category>watch</category><dc:creator>Gianluca Carucci</dc:creator><pubDate>Wed, 25 Feb 2015 18:38:16 GMT</pubDate><content:encoded>&lt;div class="kg-card-markdown"&gt;&lt;p&gt;&lt;em&gt;This post is part of the series &amp;quot;the road to Visual Studio free frontend development&amp;quot;:&lt;/em&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;&lt;a href="http://localhost:2368/frontend-life-with-visual-studio"&gt;Frontend life with Visual Studio&lt;/a&gt;&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;&lt;a href="http://localhost:2368/frontend-life-without-visual-studio"&gt;Frontend life without Visual Studio&lt;/a&gt;&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;&lt;a href="http://localhost:2368/frontend-life-is-easy-with-grunt"&gt;Frontend life is easy with Grunt&lt;/a&gt;&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;&lt;a href="http://localhost:2368/manage-frontend-dependencies-with-npm-and-browserify"&gt;Manage frontend dependencies with npm and browserify&lt;/a&gt;&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;Enhance your frontend life with grunt watch and livereload plugin&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;em&gt;You can browse the code of this post on &lt;a href="https://github.com/rucka/gianluca.carucci.org/blob/v2.2"&gt;github&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;In the previous posts I have configured Grunt and when I make a change to a source asset (JavaScript, HTML or CSS) I have to:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Save the change&lt;/strong&gt; from the editor&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Run the command&lt;/strong&gt; &lt;code&gt;grunt&lt;/code&gt; from the terminal&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Refresh the browser&lt;/strong&gt; page&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;The goal of this post is to free myself from both steps 2 and 3.&lt;/p&gt;
+&lt;h4 id="watchmyassets"&gt;watch my assets&lt;/h4&gt;
+&lt;p&gt;I start installing the right grunt plugin:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;npm install grunt-contrib-watch --save-dev
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;and change the &lt;code&gt;Gruntfile.js&lt;/code&gt;:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;grunt.initConfig({  
+  //previous declarations...
+  watch: {
+            all: {
+                files: ['client/**'],
+                tasks: ['debug'],
+                options : {
+                    atBegin: true, 
+                    livereload:true
+                }
+            }
+        },
+          //next declarations...
+));
+
+//previous dependencies loaded ...
+grunt.loadNpmTasks('grunt-contrib-watch');  
+grunt.registerTask('debug',['clean','copy', 
+'browserify']);  
+grunt.registerTask('default',['watch']);  
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now I can &lt;strong&gt;modify the assets without worrying about running the task runner again&lt;/strong&gt;, because &lt;a href="https://github.com/gruntjs/grunt-contrib-watch"&gt;&lt;code&gt;watch&lt;/code&gt;&lt;/a&gt; handles it for me (I feel grateful for that every day!).&lt;br&gt;
+As you see, I have registered a new &lt;code&gt;debug&lt;/code&gt; (this is a copy of the old &lt;code&gt;default&lt;/code&gt; task) task that will be lunched by &lt;code&gt;watch&lt;/code&gt; when the content inside the &lt;code&gt;client&lt;/code&gt; folder (the one that contains all my source assets) changes.&lt;br&gt;
+I want to run the &lt;code&gt;grunt&lt;/code&gt; command only &lt;strong&gt;once&lt;/strong&gt; after I start a developing session, so I have changed the default grunt task in order to watch my assets (you are free to change the default task if you want to manage your development workflow differently).&lt;/p&gt;
+&lt;h4 id="browserautorefresh"&gt;browser auto refresh&lt;/h4&gt;
+&lt;p&gt;This is a great result but... I use two monitors, one for the code editor and the other one for the browser where the website is rendering during the development.&lt;br&gt;
+I'm just a little step away from the heaven: my last wish is: as soon as I save a file, I want that the browser refreshes; this feature is called &lt;a href="http://livereload.com/"&gt;&lt;strong&gt;livereload&lt;/strong&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;This goal is pretty simple to achieve: grunt has to run a &lt;strong&gt;livereload server&lt;/strong&gt; which is triggered by a &lt;strong&gt;livereload client&lt;/strong&gt; just when a file changes (this work is done by the &lt;em&gt;watch Grunt plugin&lt;/em&gt;).&lt;br&gt;
+There are several &lt;a href="https://github.com/gruntjs/grunt-contrib-watch/blob/master/docs/watch-examples.md#enabling-live-reload-in-your-html"&gt;ways&lt;/a&gt; to configure livereload using watch; I chose to use the &lt;a href="https://github.com/gruntjs/grunt-contrib-connect"&gt;connect plugin for Grunt&lt;/a&gt;. So let's go and install it:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;npm install grunt-contrib-connect --save-dev
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;In the watch configuration above, you might notice that a &lt;code&gt;livereload:true&lt;/code&gt; option has been declared: this tells  grunt to &lt;strong&gt;trigger the livereload server&lt;/strong&gt; after the task has been called by watch.&lt;br&gt;
+My Grunt connect plugin configuration follows below:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;grunt.initConfig({  
+  //previous declarations...
+        connect: {
+            server: {
+                options: {
+                    hostname: '0.0.0.0',
+                    port: 8080,
+                    base: './publish',
+                    debug: true,
+                    livereload: true,
+                    keepalive: false 
+                }
+            }
+        },
+          //next declarations...
+));
+
+//previous dependencies loaded ...
+grunt.loadNpmTasks('grunt-contrib-connect');  
+grunt.registerTask('debug',['clean','copy', 
+'browserify']);  
+grunt.registerTask('default',['connect', 'watch']);  
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Just a little note: I need to change the default task registration so that the &lt;em&gt;connect&lt;/em&gt; task will is launched with watch.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;That's all&lt;/strong&gt;. I have shown only the options needed for my scope; you can find more details in the &lt;a href="https://github.com/gruntjs/grunt-contrib-watch"&gt;watch&lt;/a&gt; and &lt;a href="https://github.com/gruntjs/grunt-contrib-connect"&gt;connect&lt;/a&gt; documentations.&lt;/p&gt;
+&lt;p&gt;After a long setup, I reach how is simple and intuitive the development without worrying about all the work activities different from functional requirements.&lt;br&gt;
+At the end my frontend developing life is only about choosing my favorite editor, coding during the workday and going to the pub at the end of the day:&lt;/p&gt;
+&lt;center&gt;**what a great developer experience!**&lt;/center&gt;
+&lt;/div&gt;</content:encoded></item><item><title>Introduction to Data Science</title><description>&lt;div class="kg-card-markdown"&gt;&lt;p&gt;This year I'm embracing the big data topic and I have thought that spending some of my summer time to attend &lt;a href="https://www.coursera.org/course/datasci"&gt;&lt;strong&gt;Introduction to Data Science&lt;/strong&gt;&lt;/a&gt; class from &lt;a href="https://www.coursera.org"&gt;coursera&lt;/a&gt; would be a good idea in order to improve my knowledge about this subject. Although I went through some pain, &lt;strong&gt;I did&lt;/strong&gt;&lt;/p&gt;&lt;/div&gt;</description><link>http://localhost:2368/introduction-to-data-science/</link><guid isPermaLink="false">59e4a44feb581d000190a377</guid><category>R</category><category>data science</category><category>bigdata</category><category>coursera</category><category>kaggle</category><dc:creator>Gianluca Carucci</dc:creator><pubDate>Sun, 21 Dec 2014 11:00:00 GMT</pubDate><content:encoded>&lt;div class="kg-card-markdown"&gt;&lt;p&gt;This year I'm embracing the big data topic and I have thought that spending some of my summer time to attend &lt;a href="https://www.coursera.org/course/datasci"&gt;&lt;strong&gt;Introduction to Data Science&lt;/strong&gt;&lt;/a&gt; class from &lt;a href="https://www.coursera.org"&gt;coursera&lt;/a&gt; would be a good idea in order to improve my knowledge about this subject. Although I went through some pain, &lt;strong&gt;I did it!&lt;/strong&gt;&lt;/p&gt;
+&lt;h4 id="thecourse"&gt;the course&lt;/h4&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Commerce and research are being transformed by data-driven discovery and prediction. Skills required for data analytics at massive levels – scalable data management on and off the cloud, parallel algorithms, statistical modeling, and proficiency with a complex ecosystem of tools and platforms – span a variety of disciplines and are not easy to obtain through conventional curricula. Tour the basic techniques of data science, including both SQL and NoSQL solutions for massive data management (e.g., MapReduce and contemporaries), algorithms for data mining (e.g., clustering and association rule mining), and basic statistical modeling (e.g., linear and non-linear regression).&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p style="text-align:right;"&gt;&lt;b&gt;the course description&lt;/b&gt;&lt;/p&gt;
+&lt;h4 id="thecons"&gt;the cons&lt;/h4&gt;
+&lt;p&gt;I want to start by speaking about the &lt;strong&gt;pain&lt;/strong&gt;. The video lectures are sometimes too abstract and general, other time takes mathematical or statistic background without introducing for granted the concepts used. In general, the video lectures seem to be &lt;strong&gt;unorganized&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Just to dissuade youm if you aren't really motivated, the course is long (eight weeks) and the workload is &lt;strong&gt;high&lt;/strong&gt; and &lt;strong&gt;demanding&lt;/strong&gt;: ten/twelve hours per week. I know, the class covers a lot of topics (for example map reduce, no sql, data visualization, machine learning, graph analytics) and high workload is generally required in order to grasp the sense of data science.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Ok, if you reach here, the cons haven't stopped you&lt;/em&gt;.&lt;/p&gt;
+&lt;h4 id="thepros"&gt;the pros&lt;/h4&gt;
+&lt;p&gt;The contributes from the homeworks is &lt;strong&gt;priceless&lt;/strong&gt;: they get the feel of lot of aspects of data science, learn about some new technologies and use the technologies you know in a different way (for example, you will multiply a matrix using sql queries).&lt;/p&gt;
+&lt;p&gt;The homework assignements are &lt;strong&gt;very challenging&lt;/strong&gt;: you are able to solve practical problems you have considered too complex before you took this class. For example you have to grab some tweets and calculate for each one a sentiment value that tells you if and how much a tweet about a certain topic is positive or negative!&lt;/p&gt;
+&lt;p&gt;Another awesome example is &lt;strong&gt;machine learning&lt;/strong&gt;: the class give you to the opportunity to participate in the &lt;a href="http://www.kaggle.com/competitions"&gt;Kaggle competition&lt;/a&gt;. Kaggle is a great platform where you can compete with other data scientists in a real world contest on a given topic prediction.&lt;/p&gt;
+&lt;p&gt;I chose a &lt;a href="http://www.kaggle.com/c/bike-sharing-demand"&gt;bike sharing competition&lt;/a&gt; in which I created and submitted a model to forecast the bike rental demand in the Capital Bikeshare program in Washington, D.C. using information like temperature, season, whether the user is registered to program or not, what day is considered a holiday or a working, weather, wind speed and humidity. The &lt;a href="https://www.kaggle.com/c/bike-sharing-demand/leaderboard"&gt;scores&lt;/a&gt; of the submissions are evaluated using an error index calculated from a test dataset given by the platform.&lt;/p&gt;
+&lt;p&gt;This is a great example of a challenge: in seven days I studied the basics of the machine learning theory, I chose the right technology to use (phyton? excel? R?), I studied a new language (R) and I analyzed and implemented the prediction model: &lt;strong&gt;what a beautiful result in such a short time!!&lt;/strong&gt;&lt;br&gt;
+Just a little note about &lt;a href="http://www.r-project.org/"&gt;&lt;strong&gt;R&lt;/strong&gt;&lt;/a&gt;: it's the best example of how the costs of learning a new language, reward you for all your effort if the language totally matches your target problem. So don't  be lazy and always choose &lt;strong&gt;the right tool for the right job&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;I found machine learning a really powerful tool. If you want to enhance your skills in this area (I'll doing it!), you can follow the course &lt;a href="https://www.coursera.org/course/ml"&gt;Machine Learning&lt;/a&gt;.&lt;/p&gt;
+&lt;h4 id="attheend"&gt;at the end&lt;/h4&gt;
+&lt;p&gt;In this course I had the opportunity to learn how important it is to be pragmatic in data science in order to choose the best tool matching the context. This gave me the chance to learn new technologies such as:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="http://www.numpy.org"&gt;NumPy&lt;/a&gt; a python library to work with multi-dimensional arrays&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://pandas.pydata.org"&gt;pandas&lt;/a&gt; a python library to make it easy to work with table-like structures&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://scikit-learn.org"&gt;scikit-learn&lt;/a&gt; a python library on machine learning&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://www.r-project.org/"&gt;R&lt;/a&gt; a special purpose language for statistics, machine learning and data visualization&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The &lt;strong&gt;class forum&lt;/strong&gt; is worthy of a special mention. It's a great way to meet new smart people and exchange information about the course, especially the homework.&lt;/p&gt;
+&lt;p&gt;If you are curious, you can access to the &lt;a href="https://class.coursera.org/datasci-001/lecture/preview"&gt;video lectures&lt;/a&gt; without joining the course (and without any login).&lt;/p&gt;
+&lt;p&gt;This blog will speak about bigdata very often starting from now: so &lt;em&gt;stay tuned!&lt;/em&gt;&lt;/p&gt;
+&lt;/div&gt;</content:encoded></item><item><title>manage frontend dependencies with npm and browserify</title><description>&lt;div class="kg-card-markdown"&gt;&lt;p&gt;&lt;em&gt;This post is part of the series &amp;quot;the road to Visual Studio free frontend development&amp;quot;:&lt;/em&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;&lt;a href="http://localhost:2368/frontend-life-with-visual-studio"&gt;Frontend life with Visual Studio&lt;/a&gt;&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;&lt;a href="http://localhost:2368/manage-frontend-dependencies-with-npm-and-browserify/frontend-life-without-visual-studio"&gt;Frontend life without Visual Studio&lt;/a&gt;&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;&lt;a href="http://localhost:2368/frontend-life-is-easy-with-grunt"&gt;Frontend life is easy with Grunt&lt;/a&gt;&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;Manage frontend dependencies with npm and browserify&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;em&gt;You can browse the code of this post on &lt;a href="https://github.com/rucka/gianluca.carucci.org/blob/v2.1"&gt;github&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;&lt;/div&gt;</description><link>http://localhost:2368/manage-frontend-dependencies-with-npm-and-browserify/</link><guid isPermaLink="false">59e4a44feb581d000190a378</guid><category>grunt</category><category>browserify</category><category>vsfree</category><category>frontend development</category><dc:creator>Gianluca Carucci</dc:creator><pubDate>Sat, 25 Oct 2014 11:27:00 GMT</pubDate><content:encoded>&lt;div class="kg-card-markdown"&gt;&lt;p&gt;&lt;em&gt;This post is part of the series &amp;quot;the road to Visual Studio free frontend development&amp;quot;:&lt;/em&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;&lt;a href="http://localhost:2368/frontend-life-with-visual-studio"&gt;Frontend life with Visual Studio&lt;/a&gt;&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;&lt;a href="http://localhost:2368/manage-frontend-dependencies-with-npm-and-browserify/frontend-life-without-visual-studio"&gt;Frontend life without Visual Studio&lt;/a&gt;&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;&lt;a href="http://localhost:2368/frontend-life-is-easy-with-grunt"&gt;Frontend life is easy with Grunt&lt;/a&gt;&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;Manage frontend dependencies with npm and browserify&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;em&gt;You can browse the code of this post on &lt;a href="https://github.com/rucka/gianluca.carucci.org/blob/v2.1"&gt;github&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;blockquote&gt;
+&lt;p&gt;All variables should be declared before used. JavaScript does not require this, but doing so makes the program easier to read and makes it easier to detect undeclared variables that may become implied globals. Implied &lt;a href="http://yuiblog.com/blog/2006/06/01/global-domination/"&gt;global&lt;/a&gt; variables should never be used. Use of global variables should be minimized.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;As &lt;a href="http://en.wikipedia.org/wiki/Douglas_Crockford"&gt;Duglas Crockford&lt;/a&gt; &lt;a href="http://javascript.crockford.com/code.html"&gt;suggests&lt;/a&gt; the global variable default behaviour in javascript is evil, so it's safer to avoid it.&lt;/p&gt;
+&lt;h4 id="modulepattern"&gt;module pattern&lt;/h4&gt;
+&lt;p&gt;&lt;a href="http://addyosmani.com/resources/essentialjsdesignpatterns/book/#modulepatternjavascript"&gt;Module pattern&lt;/a&gt; in javascript is the way you make your javascript &lt;strong&gt;life easy&lt;/strong&gt;. &lt;a href="http://localhost:2368/manage-frontend-dependencies-with-npm-and-browserify/frontend-life-without-visual-studio"&gt;Previously&lt;/a&gt; I spoke about the &lt;em&gt;dependencies management&lt;/em&gt; and I mentioned &lt;a href="http://requirejs.org/"&gt;RequireJs&lt;/a&gt; as the most obvious tool to choose. requirejs is a library that follows &lt;a href="http://en.wikipedia.org/wiki/Asynchronous_module_definition"&gt;AMD&lt;/a&gt; specifications in order to manage modules in javascript.&lt;br&gt;
+To make a long story short, you can create your modules supporting AMD by wrapping your code within a clojure:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;//file app.js
+define(function (require) {
+  var logger = require('./log');
+  logger.write('hello world');
+});
+
+//file log.js
+define(function () {
+  return {
+    write: function (message) {
+      console.log(message);
+    }
+  };
+});
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;It sounds simple, but RequireJs comes with some drawbacks: it's not so comfortable to remember wrapping every file. I know: it's only a step of your development process to remember, but we can do better. My suggestion is to choose RequireJs only if you cannot use a task manager (like Grunt), because for RequireJs a task manager isn't mandatory (I think this is its best feature).&lt;br&gt;
+Fortunately I have a task manager, so I go on choosing a different dependency manager.&lt;/p&gt;
+&lt;h4 id="commonjs"&gt;CommonJs&lt;/h4&gt;
+&lt;p&gt;&lt;a href="http://en.wikipedia.org/wiki/CommonJS"&gt;CommonJs&lt;/a&gt; is a different way to manage dependencies in JavaScript: it was created to support JavaScript on the server side (Node.js),  thanks to some libraries now you can benefit from &lt;strong&gt;commonjs on the client side&lt;/strong&gt; too.&lt;br&gt;
+CommonJs ensures that each module hides every variable to other modules by default: in order to expose variables outside, you have to export them explicitly.&lt;/p&gt;
+&lt;h4 id="browserify"&gt;Browserify&lt;/h4&gt;
+&lt;p&gt;The library I'm choosing to manage dependencies is &lt;a href="http://browserify.org/"&gt;&lt;strong&gt;Browserify&lt;/strong&gt;&lt;/a&gt;: it's simple and brilliant because you can write your code that requires dependencies just as well as you do in Node.js. At the build time, Browserify starts from the javascript entry point and recursively &lt;strong&gt;bundles up&lt;/strong&gt; all your required modules in a &lt;strong&gt;single output file&lt;/strong&gt;. The great thing is that Browserify detects all dependencies of your project for you: make available modules to Browserify (we speak about this detail in a while) and require them is the only things up to you.&lt;br&gt;
+For example, look at the &lt;code&gt;script&lt;/code&gt; html section of my website. Before using Browserify, it was:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;script src=&amp;quot;vendor/html5.js&amp;quot; type=&amp;quot;text/javascript&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
+&amp;lt;script src=&amp;quot;vendor/jquery.js&amp;quot; type=&amp;quot;text/javascript&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
+
+&amp;lt;script src=&amp;quot;vendor/jquery.html5loader/animations/jquery.html5Loader.line.js&amp;quot; type=&amp;quot;text/javascript&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
+&amp;lt;script src=&amp;quot;vendor/jquery.html5loader/jquery.html5Loader.js&amp;quot; type=&amp;quot;text/javascript&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
+&amp;lt;script src=&amp;quot;scripts/loader.js&amp;quot; type=&amp;quot;text/javascript&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
+
+&amp;lt;script src=&amp;quot;vendor/underscore.js&amp;quot; type=&amp;quot;text/javascript&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
+&amp;lt;script src=&amp;quot;vendor/jquery.awesomeCloud.js&amp;quot; type=&amp;quot;text/javascript&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
+&amp;lt;script src=&amp;quot;vendor/jquery.knob.js&amp;quot; type=&amp;quot;text/javascript&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
+&amp;lt;script src=&amp;quot;vendor/jquery.scrollTo.js&amp;quot; type=&amp;quot;text/javascript&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
+&amp;lt;script src=&amp;quot;vendor/waypoints.js&amp;quot; type=&amp;quot;text/javascript&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
+&amp;lt;script src=&amp;quot;scripts/default.js&amp;quot; type=&amp;quot;text/javascript&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
+&amp;lt;script src=&amp;quot;scripts/ga.js&amp;quot; type=&amp;quot;text/javascript&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;but after using Browserify, I need only to declare the reference to the entry point of my app:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;script src=&amp;quot;app.js&amp;quot; type=&amp;quot;text/javascript&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;it's awesome! Tell me how to do that!&lt;/strong&gt;&lt;br&gt;
+Let's start downloading the &lt;code&gt;grunt-browserify&lt;/code&gt; plugin:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;npm install grunt-browserify --save-dev
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;now I can modify the grunt file removing the uglify section (this job is now provided by Browserify) and add a new Browserify section to the configuration:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;grunt.initConfig({  
+  //previous declarations...
+     browserify: {
+            main: {
+                options: {
+                    bundleOptions:{
+                        debug:true, 
+                    },
+                },
+                src : ['client/app.js'],
+                dest: 'publish/app.js'
+            }
+        }, 
+  //next declarations...
+));
+
+//previous dependencies loaded ...
+grunt.loadNpmTasks('grunt-browserify');
+grunt.registerTask('default', ['clean','copy', 'browserify']);   
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This configuration tells browserify to bundle all dependencies in a single file, and it provides the source map (thanks to the &lt;code&gt;debug:true&lt;/code&gt; option) so that during the debugging you inspect your application JavaScript files as splitted.&lt;/p&gt;
+&lt;p&gt;The configuration is done, now I can change my app code in the Node.js way:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;//app.js
+module.exports = appFactory();
+function appFactory() {
+    &amp;quot;use strict&amp;quot;;
+    var that = {};
+    var $ = require('jquery');
+	//...
+    that.start = function() {
+        $('html').animate({ scrollTop: 0 }, 1);
+        //...
+     };   
+     //...
+     return that;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;To be honest, I have simplified the grunt configuration so that it's focused only on the important work done by grunt. If you take a look at the &lt;a href="https://github.com/rucka/gianluca.carucci.org/blob/v2.1/Gruntfile.js"&gt;real code&lt;/a&gt;, there are some interesting options for creating aliases and to make available to Browserify the not CommonJs compatible libraries (the option is called &lt;em&gt;shim&lt;/em&gt;); for futher details look at &lt;a href="https://github.com/substack/node-browserify#usage"&gt;Browserify&lt;/a&gt; and the &lt;a href="https://github.com/jmreidy/grunt-browserify"&gt;grunt-browserify&lt;/a&gt; documentation.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;What if I don't use grunt?&lt;/strong&gt; Don't panic! &lt;a href="http://codeofrob.com/blog.html"&gt;Rob&lt;/a&gt; &lt;a href="http://codeofrob.com/entries/starting-the-frameworkless-js-project.html"&gt;shows&lt;/a&gt; shows you how to use browserify in the standalone way.&lt;/p&gt;
+&lt;p&gt;A little interesting note before move on: you can &lt;em&gt;require&lt;/em&gt; and use core (server) node modules in your client code; browse the &lt;a href="http://nodejs.org/api/"&gt;node api&lt;/a&gt; for more details and take a look at &lt;a href="http://codeofrob.com/entries/frameworkless-js---rendering-templates.html"&gt;this example&lt;/a&gt; where &lt;a href="http://codeofrob.com/blog.html"&gt;Rob&lt;/a&gt; shows how to take advantage of node api in order to render an html template without using any framework.&lt;/p&gt;
+&lt;h4 id="packagemanager"&gt;package manager&lt;/h4&gt;
+&lt;p&gt;Ok, in both the Grunt configuration and javascript/html code there are no traces of the location of the dependencies.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;How and where I do have to place my dependencies?&lt;/em&gt;&lt;br&gt;
+Here is where a (client) package manager comes in.&lt;br&gt;
+Remember what we said some posts ago? The most widely used client package manager is &lt;a href="http://bower.io"&gt;Bower&lt;/a&gt;, but it will not be my choice (in this context): the reason is, I already have a package manager for the dependencies.&lt;br&gt;
+&lt;em&gt;Can I use &lt;strong&gt;npm&lt;/strong&gt; for the client side dependencies as well?&lt;/em&gt; &lt;strong&gt;Definitely yes&lt;/strong&gt;! The answer to the question &amp;quot;Why  don't we use Bower?&amp;quot; is simple: one tool is better than two!&lt;br&gt;
+Sounds strange but most of the widespread client libraries are available in Npm.&lt;/p&gt;
+&lt;p&gt;Npm comes with another great advantage when used with Browserify: CommonJs by default uses Npm as package manager, so when you need to require a dependency, the dependency resolver looks for a module located in the same directory where Npm put it (the default is under the &lt;code&gt;node_modules&lt;/code&gt; directory in the root of the project). Let's go to download our client dependencies like this:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;npm install jquery --save
+npm install underscore --save
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now, If you check the &lt;code&gt;package.json&lt;/code&gt; file, you can see how  &lt;code&gt;devDependencies&lt;/code&gt; section and the &lt;code&gt;dependencies&lt;/code&gt; section have changed as well:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;{
+  &amp;quot;name&amp;quot;: &amp;quot;gianluca.carucci.org&amp;quot;,
+  &amp;quot;author&amp;quot;: &amp;quot;Gianluca Carucci&amp;quot;,
+  &amp;quot;devDependencies&amp;quot;: {
+    &amp;quot;grunt&amp;quot;: &amp;quot;~0.4.2&amp;quot;,
+    &amp;quot;grunt-contrib-uglify&amp;quot;: &amp;quot;~0.4.0&amp;quot;,
+    &amp;quot;grunt-contrib-clean&amp;quot;: &amp;quot;~0.5.0&amp;quot;,
+    &amp;quot;grunt-contrib-copy&amp;quot;: &amp;quot;~0.5.0&amp;quot;,
+    &amp;quot;grunt-browserify&amp;quot;: &amp;quot;~2.0.1&amp;quot;
+  },
+  &amp;quot;dependencies&amp;quot;: {
+    &amp;quot;underscore&amp;quot;: &amp;quot;~1.6.0&amp;quot;,
+    &amp;quot;jquery&amp;quot;: &amp;quot;~2.1.0&amp;quot;
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This is how you can manage modules using Npm. If you need to require local modules from Browserify instead of default Npm modules, you have to require them using a relative path:&lt;br&gt;
+var mymodule = require('./../mymodule');&lt;/p&gt;
+&lt;h4 id="browserifyiloveyou"&gt;Browserify I love you&lt;/h4&gt;
+&lt;p&gt;The only drawback of using Browserify is that you need a task manager to bundle up your JavaScript; if you have it, your life goes simple, if don't, your should choose is &lt;a href="http://requirejs.org/"&gt;RequireJs&lt;/a&gt;. I found Browserify useful for these reasons:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Client side development experience is (quite) the &lt;strong&gt;same&lt;/strong&gt; as the server side one (so turn developers between the server side and client side are simplee)&lt;/li&gt;
+&lt;li&gt;You deliver only &lt;strong&gt;one JavaScript file&lt;/strong&gt; for the application&lt;/li&gt;
+&lt;li&gt;It is advantageous to use the &lt;strong&gt;source map&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;It is advantageous to use the &lt;strong&gt;Node.js server api&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;That's all for now. I have one more problem to solve: &lt;em&gt;how can I avoid running Grunt manually when a source code file changes?&lt;/em&gt; This is the topic of the &lt;a href="http://localhost:2368/manage-frontend-dependencies-with-npm-and-browserify/enhance-your-frontend-life-with-grunt-watch-and-livereload"&gt;next&lt;/a&gt; post.&lt;/p&gt;
+&lt;/div&gt;</content:encoded></item><item><title>frontend life is easy with Grunt</title><description>&lt;div class="kg-card-markdown"&gt;&lt;p&gt;&lt;em&gt;This post is part of the series &amp;quot;the road to Visual Studio free frontend development&amp;quot;:&lt;/em&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;&lt;a href="http://localhost:2368/frontend-life-with-visual-studio"&gt;Frontend life with Visual Studio&lt;/a&gt;&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;&lt;a href="http://localhost:2368/frontend-life-without-visual-studio"&gt;Frontend life without Visual Studio&lt;/a&gt;&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;Frontend life is easy with Grunt&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;em&gt;You can browse the code of this post on &lt;a href="https://github.com/rucka/gianluca.carucci.org/blob/v2.1"&gt;github&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;If you think that the term &lt;em&gt;build&lt;/em&gt;&lt;/p&gt;&lt;/div&gt;</description><link>http://localhost:2368/frontend-life-is-easy-with-grunt/</link><guid isPermaLink="false">59e4a44feb581d000190a376</guid><category>grunt</category><category>vsfree</category><category>frontend development</category><category>source map</category><category>uglify</category><dc:creator>Gianluca Carucci</dc:creator><pubDate>Thu, 07 Aug 2014 10:00:00 GMT</pubDate><content:encoded>&lt;div class="kg-card-markdown"&gt;&lt;p&gt;&lt;em&gt;This post is part of the series &amp;quot;the road to Visual Studio free frontend development&amp;quot;:&lt;/em&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;&lt;a href="http://localhost:2368/frontend-life-with-visual-studio"&gt;Frontend life with Visual Studio&lt;/a&gt;&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;&lt;a href="http://localhost:2368/frontend-life-without-visual-studio"&gt;Frontend life without Visual Studio&lt;/a&gt;&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;Frontend life is easy with Grunt&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;em&gt;You can browse the code of this post on &lt;a href="https://github.com/rucka/gianluca.carucci.org/blob/v2.1"&gt;github&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;If you think that the term &lt;em&gt;build&lt;/em&gt; is used only in backend development you are in trouble.&lt;br&gt;
+Nowadays a lot of frontend projects require to manage tasks such as expansion of SASS and LESS, minification of CSS/JS, running JSHint or JSLint, compressing the images, running unit tests and so on: a &lt;em&gt;client build system&lt;/em&gt; aka &lt;strong&gt;task manager&lt;/strong&gt; is mandatory.&lt;/p&gt;
+&lt;h4 id="beforeyoustart"&gt;before you start&lt;/h4&gt;
+&lt;p&gt;A lot of tools used to automate the management of the frontend projects are written in &lt;strong&gt;Node.js&lt;/strong&gt;: it's sounds strange, but node.js is not only a technology used for writing a server side api, but it's widely spread in development of automation tasks. If you haven't yet node.js installed in your machine, &lt;a href="http://nodejs.org"&gt;do it&lt;/a&gt;.&lt;br&gt;
+Now it's time to &lt;a href="http://gianluca.carucci.org"&gt;migrate my website&lt;/a&gt; to &lt;a href="http://gruntjs.com/"&gt;&lt;strong&gt;Grunt&lt;/strong&gt;&lt;/a&gt;. My first goal is to make grunt able working like the powershell &lt;a href="https://github.com/rucka/gianluca.carucci.org/blob/v1.0/publish.ps1"&gt;script&lt;/a&gt; I showed in the first post of this series; moreover, I want to remove the useless files and change as little code as possible.&lt;br&gt;
+On &lt;em&gt;github&lt;/em&gt; you can see the status of the project &lt;a href="https://github.com/rucka/gianluca.carucci.org/tree/v1.0"&gt;before&lt;/a&gt; and &lt;a href="https://github.com/rucka/gianluca.carucci.org/tree/v2.0"&gt;after&lt;/a&gt; its migration to grunt.&lt;/p&gt;
+&lt;h4 id="letsstart"&gt;let's start&lt;/h4&gt;
+&lt;p&gt;Node.js uses &lt;strong&gt;Npm&lt;/strong&gt; to manage dependencies of the project, so let's start creating a folder, opening a command prompt and typing:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;npm init 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The command creates a &lt;em&gt;package.json&lt;/em&gt; file in which there are information about your project (name, author, repository url...). In particular we're interested in &lt;strong&gt;the dependencies section&lt;/strong&gt;. The command &lt;code&gt;npm install&lt;/code&gt; downloads the local dependencies and put them in the &lt;code&gt;node_module&lt;/code&gt; folder located in the root of the project.&lt;br&gt;
+We go on installing grunt:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;npm install grunt --save-dev
+npm install -g grunt-cli
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;grunt is shipped in two parts: the command line (&lt;em&gt;grunt-cli&lt;/em&gt;) and the task runner (&lt;em&gt;grunt&lt;/em&gt;). The command line is installed globally to the machine (note the option &lt;em&gt;-g&lt;/em&gt;) so you can execute the &lt;code&gt;grunt&lt;/code&gt; command wherever you are.&lt;br&gt;
+If you take a look at the package.json file&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;{
+  &amp;quot;name&amp;quot;: &amp;quot;gianluca.carucci.org&amp;quot;,
+  &amp;quot;version&amp;quot;: &amp;quot;2.0.0&amp;quot;,
+  &amp;quot;description&amp;quot;: &amp;quot;my personal website&amp;quot;,
+  &amp;quot;repository&amp;quot;: {
+    &amp;quot;type&amp;quot;: &amp;quot;git&amp;quot;,
+    &amp;quot;url&amp;quot;: &amp;quot;https://github.com/rucka/gianluca.carucci.org.git&amp;quot;
+  },
+  &amp;quot;author&amp;quot;: &amp;quot;Gianluca Carucci&amp;quot;,
+  &amp;quot;devDependencies&amp;quot;: {
+    &amp;quot;grunt&amp;quot;: &amp;quot;~0.4.2&amp;quot;
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Note that &lt;em&gt;grunt&lt;/em&gt; is placed inside the &lt;code&gt;devdependecies&lt;/code&gt; section.&lt;/p&gt;
+&lt;h4 id="projectstructure"&gt;project structure&lt;/h4&gt;
+&lt;p&gt;Now the project folder contains only the &lt;code&gt;package.json&lt;/code&gt; file; I created a &lt;code&gt;client&lt;/code&gt; folder under the root, where I copied all the assets (javascript, css and html files). The project structure is almost complete: it's missing only the &lt;code&gt;Gruntfile.js&lt;/code&gt;.&lt;/p&gt;
+&lt;h4 id="tasksconfiguration"&gt;tasks configuration&lt;/h4&gt;
+&lt;p&gt;The simplest Grunt file is similar to the following:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;module.exports = function(grunt) {
+  grunt.initConfig({
+    //import project metadata
+    pkg: grunt.file.readJSON('package.json') 
+  });
+};
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The function &lt;code&gt;grunt.initConfig&lt;/code&gt; receives a structure as parameter in which you can define and configure the tasks.&lt;br&gt;
+In this project I'll use three grunt task plugins that I can download and install like this:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;npm install grunt-contrib-clean --save-dev
+npm install grunt-contrib-copy --save-dev
+npm install grunt-contrib-uglify --save-dev
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Before using the plugins you have to load them using &lt;code&gt;grunt.loadNpmTasks&lt;/code&gt; function in the following way:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;grunt.loadNpmTasks('grunt-contrib-clean');
+grunt.loadNpmTasks('grunt-contrib-uglify');
+grunt.loadNpmTasks('grunt-contrib-copy');
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Finally it's the time to &lt;strong&gt;make the task builder useful&lt;/strong&gt;: grunt will put a copy of website in the publishing folder transforming the assets to the minified pairs.&lt;/p&gt;
+&lt;h4 id="cleanpublishingfolder"&gt;clean publishing folder&lt;/h4&gt;
+&lt;p&gt;The first task to configure is to &lt;strong&gt;clean the publishing&lt;/strong&gt; folder in which I'll put the assets. In the grunt file I declare a &lt;em&gt;clean&lt;/em&gt; task section as follows:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;grunt.initConfig({
+  //previous declarations...
+  clean: {
+    publish: 'publish'
+  },
+  //next declarations...
+));
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;Configuring a task is a pretty&lt;/strong&gt; simple job so starting from now I'll explain only the valuable code; for a detailed guide you can take a look at &lt;a href="http://gruntjs.com/configuring-tasks"&gt;grunt documentation&lt;/a&gt;.&lt;/p&gt;
+&lt;h4 id="publishingassets"&gt;publishing assets&lt;/h4&gt;
+&lt;p&gt;The next task will copy the assets to the publishing folder:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;grunt.initConfig({
+  //previous declarations...
+   copy: {
+     target: {
+       cwd: 'client',
+       expand: true,
+       src:['**','!css/**', '!scripts/**','!vendor/**'],
+       dest: 'publish/'
+     },
+     cssdev: {
+       cwd: 'client',
+       expand: true,
+       src:['css/**'],
+       dest: 'publish/'
+     }
+    },
+  //next declarations...
+));
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id="minifytheassetfiles"&gt;minify the asset files&lt;/h4&gt;
+&lt;p&gt;You can note that the &lt;code&gt;copy&lt;/code&gt; task excludes the javascript files: the reason is that the files will be minified by the &lt;em&gt;uglify&lt;/em&gt; task:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;grunt.initConfig({
+  //previous declarations...
+    uglify: {
+      options : {
+        sourceMap: true,
+        sourceMapIncludeSources:true,
+      },
+      javascript : {
+        files : [{
+          cwd: 'client/',
+          src: ['**/*.js'],
+          dest: 'publish/',
+          expand: true,
+        }]
+      }
+    }
+  //next declarations...
+));
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;a href="https://github.com/gruntjs/grunt-contrib-uglify"&gt;Uglify&lt;/a&gt; does &lt;strong&gt;the magic&lt;/strong&gt;, but it's not limited to the minification magic, it does more: if configured, it can create the &lt;strong&gt;source map&lt;/strong&gt; of the source code; with a source map I can use the same file (the minified version) for both the development and the production website navigation so the browser will always download a small size file instead of the real, potentially large file.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Ok, but what does that have to do with the source map?&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;If you use a browser compatible source map (at the moment the latest versions of the main browsers do it), when you inspect the code using the debugger, the source map is downloaded so &lt;strong&gt;the debugger can translate the minified file into the original file&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;I found the source map awesome because:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;You are debugging &lt;strong&gt;the same&lt;/strong&gt; javascript you will deploy in production&lt;/li&gt;
+&lt;li&gt;The source map file is downloaded &lt;strong&gt;on demand&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;If you use the source map with &lt;strong&gt;all languages&lt;/strong&gt; able to compile to JavaScript (like CoffeeScript, TypeScript, &lt;a href="http://swannodette.github.io/2013/09/15/source-maps/"&gt;ClojureScript&lt;/a&gt;...) the debugger shows you the source code in your original language&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;If you want to know more about the source map you can start from &lt;a href="http://www.html5rocks.com/en/tutorials/developertools/sourcemaps/"&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;h4 id="runtasks"&gt;run tasks&lt;/h4&gt;
+&lt;p&gt;Now it's time to run the tasks. From the command line I can run the tasks individually, typing &lt;code&gt;grunt clean&lt;/code&gt;, &lt;code&gt;grunt copy&lt;/code&gt; or &lt;code&gt;grunt uglify&lt;/code&gt; . The interesting thing is that I can register a default task which run the sequence of tasks I prefer when I type the command &lt;code&gt;grunt&lt;/code&gt; without any parameter. In my case I configured the default task like this:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;grunt.registerTask('default', ['clean','copy', 'uglify']);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id="testyoursite"&gt;test your site&lt;/h4&gt;
+&lt;p&gt;At the end I have a little issue to solve: how can I test my website when I write my code with a simple editor (for example, vim)?&lt;br&gt;
+Don't be afraid, Npm - again - make you safe.&lt;br&gt;
+Run it once time for all:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;npm install -g http-server 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Run it once time again for every development session:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;http-server [your path project root]/publish  
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now open your browser and your website is available from &lt;a href="http://localhost:8080/index.html"&gt;http://localhost:8080/index.html&lt;/a&gt; (or whathever page you want).&lt;/p&gt;
+&lt;h4 id="developmentworkflow"&gt;development workflow&lt;/h4&gt;
+&lt;p&gt;Summarizing: when your Grunt file is completed, your development workflow is composed of these steps:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;modify the code&lt;/strong&gt; inside your editor and save your changes&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;run the command&lt;/strong&gt; &lt;code&gt;grunt&lt;/code&gt; from the terminal&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;refresh&lt;/strong&gt; your browser page&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Is it good for you?&lt;/p&gt;
+&lt;h4 id="notoomanysteps"&gt;no, too many steps!&lt;/h4&gt;
+&lt;p&gt;You are right; Grunt could do better: I'll show you how to reduce the development workflow to only the first step, so that when you save your file, &lt;a href="http://localhost:2368/frontend-life-is-easy-with-grunt/enhance-your-frontend-life-with-grunt-watch-and-livereload"&gt;Grunt watches it and reloads&lt;/a&gt; your browser page automatically without any effort!&lt;/p&gt;
+&lt;h4 id="okbutiwantmore"&gt;ok, but I want more!&lt;/h4&gt;
+&lt;p&gt;I showed you only the basic features of Grunt. What I love about this tool is the huge number of awesome plugins that exist for it, so take your time and try grunt out to:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://www.npmjs.com/package/grunt-karma"&gt;run your tests&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;minimize &lt;a href="https://npmjs.org/package/grunt-contrib-cssmin"&gt;CSS&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;compile &lt;a href="https://npmjs.org/package/grunt-contrib-sass"&gt;Sass&lt;/a&gt; or &lt;a href="https://npmjs.org/package/grunt-contrib-less"&gt;Less&lt;/a&gt; files to CSS&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://npmjs.org/package/grunt-contrib-jshint"&gt;validate&lt;/a&gt; your JavaScript code&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://npmjs.org/package/grunt-contrib-imagemin"&gt;minify&lt;/a&gt; your images&lt;/li&gt;
+&lt;li&gt;manage different &lt;a href="https://www.npmjs.com/package/grunt-env"&gt;environment&lt;/a&gt; configurations&lt;/li&gt;
+&lt;li&gt;mock your real services during the development&lt;/li&gt;
+&lt;li&gt;add &lt;a href="https://www.npmjs.com/package/grunt-autoprefixer"&gt;vendor prefix&lt;/a&gt; automatically to your CSS files&lt;br&gt;
+development&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;That's all for now: next time I'll speak about how to &lt;a href="http://localhost:2368/frontend-life-is-easy-with-grunt/manage-frontend-dependencies-with-npm-and-browserify"&gt;manage client dependencies&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;</content:encoded></item><item><title>frontend life without Visual Studio</title><description>&lt;div class="kg-card-markdown"&gt;&lt;p&gt;&lt;em&gt;This post is part of the series &amp;quot;the road to Visual Studio free frontend development&amp;quot;:&lt;/em&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;&lt;a href="http://localhost:2368/frontend-life-with-visual-studio"&gt;Frontend life with Visual Studio&lt;/a&gt;&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;Frontend life without Visual Studio&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;em&gt;You can browse the code of this post on &lt;a href="https://github.com/rucka/gianluca.carucci.org/blob/v2.0"&gt;github&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;In the previous part I showed how to manage a pure html website&lt;/p&gt;&lt;/div&gt;</description><link>http://localhost:2368/frontend-life-without-visual-studio-2/</link><guid isPermaLink="false">59e4a44feb581d000190a379</guid><category>vsfree</category><category>frontend development</category><dc:creator>Gianluca Carucci</dc:creator><pubDate>Thu, 10 Jul 2014 10:00:00 GMT</pubDate><content:encoded>&lt;div class="kg-card-markdown"&gt;&lt;p&gt;&lt;em&gt;This post is part of the series &amp;quot;the road to Visual Studio free frontend development&amp;quot;:&lt;/em&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;&lt;a href="http://localhost:2368/frontend-life-with-visual-studio"&gt;Frontend life with Visual Studio&lt;/a&gt;&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;Frontend life without Visual Studio&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;em&gt;You can browse the code of this post on &lt;a href="https://github.com/rucka/gianluca.carucci.org/blob/v2.0"&gt;github&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;In the previous part I showed how to manage a pure html website and I spoke about the good (few) and the bad (too much) parts of web development based on Visual Studio.&lt;/p&gt;
+&lt;p&gt;It's time to go back and enhance my technical requirements. I need to:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Use a &lt;strong&gt;platform independent&lt;/strong&gt; ide/editor&lt;/li&gt;
+&lt;li&gt;Make the project as independent possible from the ide (no project files)&lt;/li&gt;
+&lt;li&gt;Enable &lt;strong&gt;one click&lt;/strong&gt; (or command) setup of my dev environment&lt;/li&gt;
+&lt;li&gt;Include into the project &lt;strong&gt;only what I need&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Manage &lt;strong&gt;simple library dependencies&lt;/strong&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id="writethecode"&gt;write the code&lt;/h4&gt;
+&lt;p&gt;Take a breath and start choosing your favourite ide/editor (for this context). Mine is vim (the reason is out of scope for now), but choose what you want: there are &lt;strong&gt;great, lightweight and platform independent ides&lt;/strong&gt; out of there; if you are confused and you want something more simple than vim, take a look at &lt;a href="http://lighttable.com"&gt;lightable&lt;/a&gt; or &lt;a href="https://www.jetbrains.com/webstorm/"&gt;webstorm&lt;/a&gt;.&lt;br&gt;
+By choosing the (right) ide/editor I solve the first two points.&lt;/p&gt;
+&lt;h4 id="buildthecode"&gt;build the code&lt;/h4&gt;
+&lt;p&gt;Points 3 and 4 require a task runner that automate repetitive tasks including minification, compilation and publishing of the project resources. The most famous and widly used task runner in the web development is **&lt;a href="http://gruntjs.com/"&gt;Grunt**&lt;/a&gt;: I will be banal and hiding myself in the crowd.&lt;/p&gt;
+&lt;h4 id="managedependencies"&gt;manage dependencies&lt;/h4&gt;
+&lt;p&gt;Now I have only one requirement to deal with: manage the dependencies of the project. How I can fetch and install packages? Again, how I can use packages without going crazy? The First question is solved by a &lt;em&gt;&lt;a href="http://en.wikipedia.org/wiki/Package_manager"&gt;package manager&lt;/a&gt;&lt;/em&gt;; the latter is solved by a &lt;em&gt;dependency manager&lt;/em&gt;.&lt;br&gt;
+If I were banal again, I would choose &lt;a href="http://bower.io/"&gt;Bower&lt;/a&gt; as a package manager and &lt;a href="http://requirejs.org/"&gt;RequireJs&lt;/a&gt; as a dependency manager, but that's not not the case: I'm leaving a bit of suspence before speaking about the management of library dependencies because Grunt is the theme of next the post of this series....&lt;/p&gt;
+&lt;/div&gt;</content:encoded></item><item><title>JavaScript pain and love</title><description>&lt;div class="kg-card-markdown"&gt;&lt;p&gt;This is a common story how a developer moves from &lt;strong&gt;hating&lt;/strong&gt; to &lt;strong&gt;loving&lt;/strong&gt; &lt;em&gt;JavaScript&lt;/em&gt;. In fact, after reading around in the developer world (especially the .NET world) a common path is:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Stage one: when a developer approaches DHTML for the first time, he thinks &lt;em&gt;&amp;quot;what a newbie language! It's&lt;/em&gt;&lt;/p&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><link>http://localhost:2368/javascript-pain-and-love-2/</link><guid isPermaLink="false">59e4a44feb581d000190a37a</guid><category>devlife</category><category>javascript</category><dc:creator>Gianluca Carucci</dc:creator><pubDate>Sun, 29 Jun 2014 10:11:00 GMT</pubDate><content:encoded>&lt;div class="kg-card-markdown"&gt;&lt;p&gt;This is a common story how a developer moves from &lt;strong&gt;hating&lt;/strong&gt; to &lt;strong&gt;loving&lt;/strong&gt; &lt;em&gt;JavaScript&lt;/em&gt;. In fact, after reading around in the developer world (especially the .NET world) a common path is:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Stage one: when a developer approaches DHTML for the first time, he thinks &lt;em&gt;&amp;quot;what a newbie language! It's totally useless, because thanks to a postback I can manage the UI interactions made by the user&amp;quot;&lt;/em&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Stage two: when a developer meets HTML and jQuery, he thought &lt;em&gt;&amp;quot;jQuery is powerful but it's a shame that it is based on JavaScript, I can't understand what happens when: I cling to the backend development and I leave jQuery to a junior developer&amp;quot;&lt;/em&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Stage three: when a developer hits on the book &lt;a href="http://www.amazon.com/JavaScript-Good-Parts-Douglas-Crockford/dp/0596517742"&gt;JavaScript The Goods Parts&lt;/a&gt;, it exclaims with remorse &lt;em&gt;&amp;quot;Please JavaScript, forgive me for all the time I condemned you: I hadn't seen the light yet!&amp;quot;&lt;/em&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Sometimes the last stage is a bit more complicated, especially if you have a solid object oriented background. When you start to feel the JavaScript potential, the first approach following by you is to try to apply to JavaScript the same languages paradigms you are used to, such as &lt;em&gt;classes&lt;/em&gt;, &lt;em&gt;inheritance&lt;/em&gt;...&lt;/p&gt;
+&lt;p&gt;In the football context, it's like you try to beat &lt;a href="http://www.fcbarcelona.com/"&gt;FC Barcelona&lt;/a&gt; playing &lt;a href="http://en.wikipedia.org/wiki/Tiki-taka"&gt;'Tiki-taka'&lt;/a&gt;: unfortunately &lt;em&gt;Iniesta&lt;/em&gt;, &lt;em&gt;Xavi&lt;/em&gt; and &lt;em&gt;Messi&lt;/em&gt; belong to the opponent's team.&lt;br&gt;
+So, my suggestion is the following: you have to come back to the earth and forget things like dependency injection, Linq, Visual Studio, reflection and generics (replace that with the features of any of your favorite languages and tools): if you think that you can develop in JavaScript in the same way you do in C# or Java (or any other language of your preference), a walloping is wating for you.&lt;/p&gt;
+&lt;h6 id="whatsthebestapproch"&gt;What's the best approch?&lt;/h6&gt;
+&lt;p&gt;I continue with the football analogy. You have to take advantage of your skills like &lt;a href="http://www.chelseafc.com/"&gt;Chelsea&lt;/a&gt; did &lt;a href="http://en.wikipedia.org/wiki/2011%E2%80%9312_UEFA_Champions_League_knockout_phase"&gt;in the semi-final of the 2012 Champions league&lt;/a&gt;: a &lt;a href="http://en.wikipedia.org/wiki/Catenaccio"&gt;solid, compact defense and counterattack&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;For all the languages you learn, you must capitalize features and paradims of the language and avoid trying to bend it to your habits. So, for JavaScript &lt;strong&gt;embrace&lt;/strong&gt; its simplicity, productivity and &lt;a href="http://www.amazon.com/JavaScript-Good-Parts-Douglas-Crockford/dp/0596517742"&gt;goods parts&lt;/a&gt; avoid its &lt;a href="http://archive.oreilly.com/pub/a/javascript/excerpts/javascript-good-parts/bad-parts.html"&gt;bad parts&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;</content:encoded></item><item><title>frontend life with Visual Studio</title><description>&lt;div class="kg-card-markdown"&gt;&lt;p&gt;&lt;em&gt;This post is part of series &amp;quot;the road to Visual Studio free frontend development&amp;quot;:&lt;/em&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;Frontend life with Visual Studio&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;em&gt;You can browse code of this post on &lt;a href="https://github.com/rucka/gianluca.carucci.org/blob/v1.0"&gt;github&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;Every good project starts with identifing some &lt;strong&gt;requirements&lt;/strong&gt; and my &lt;a href="http://gianluca.carucci.org"&gt;new website&lt;/a&gt; also follows this simple rule.  My list of&lt;/p&gt;&lt;/div&gt;</description><link>http://localhost:2368/frontend-life-with-visual-studio-2/</link><guid isPermaLink="false">59e4a44feb581d000190a37f</guid><category>vsfree</category><category>visual studio</category><category>powershell</category><category>frontend development</category><category>windows</category><dc:creator>Gianluca Carucci</dc:creator><pubDate>Thu, 12 Jun 2014 07:11:00 GMT</pubDate><content:encoded>&lt;div class="kg-card-markdown"&gt;&lt;p&gt;&lt;em&gt;This post is part of series &amp;quot;the road to Visual Studio free frontend development&amp;quot;:&lt;/em&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;Frontend life with Visual Studio&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;em&gt;You can browse code of this post on &lt;a href="https://github.com/rucka/gianluca.carucci.org/blob/v1.0"&gt;github&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;Every good project starts with identifing some &lt;strong&gt;requirements&lt;/strong&gt; and my &lt;a href="http://gianluca.carucci.org"&gt;new website&lt;/a&gt; also follows this simple rule.  My list of requirements is the following:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;simple&lt;/li&gt;
+&lt;li&gt;fast&lt;/li&gt;
+&lt;li&gt;mobile friendly&lt;/li&gt;
+&lt;li&gt;server side technology free&lt;/li&gt;
+&lt;li&gt;ready as soon as possible&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The latter is the most important (like for all other projects). So, I decided to reach my goal by using the tool I deal with every day: Visual Studio.&lt;/p&gt;
+&lt;p&gt;First choise, first issue: &lt;strong&gt;how can I use Visual Studio detached from ASP.NET?&lt;/strong&gt;&lt;br&gt;
+I'm a lucky man because &lt;a href="http://purehtml.codeplex.com/"&gt;purehtml template&lt;/a&gt; suites this purpose.&lt;/p&gt;
+&lt;p&gt;Now we can go further: &lt;strong&gt;how I can minify my css and javascript files?&lt;/strong&gt;&lt;br&gt;
+The Visual Studio plugin &lt;a href="http://vswebessentials.com/"&gt;Web Essential&lt;/a&gt; helps me. This little devil provides a lot of useful features to manage the life cycle of both the client code and style scripts (exactly what I need). In addition it can transform either sass or less scripts to css and either typescript or coffescript to javascript (out of scope for this project).&lt;/p&gt;
+&lt;p&gt;Last but not least: &lt;strong&gt;how can I use minified files only for production and use the original - not minified - during the development?&lt;/strong&gt;&lt;br&gt;
+I decided to write a &lt;a href="https://github.com/rucka/gianluca.carucci.org/blob/v1.0/publish.ps1"&gt;little script powershell&lt;/a&gt; in order to copy the website content to a &lt;strong&gt;publishing directory&lt;/strong&gt; and replace both css and js files with its minified pairs.&lt;/p&gt;
+&lt;p&gt;The mission is finally accomplished: my new &lt;a href="http://gianluca.carucci.org"&gt;website&lt;/a&gt; &lt;strong&gt;is up and running&lt;/strong&gt;. Now it's time to have a &lt;strong&gt;retrospective&lt;/strong&gt; about the frontend development experience with Visual Studio.&lt;/p&gt;
+&lt;p&gt;The good parts:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The discussed solution &lt;strong&gt;satisfies&lt;/strong&gt; all the requirements&lt;/li&gt;
+&lt;li&gt;The used tools are &lt;strong&gt;familiar&lt;/strong&gt; to a microsoft stack developer&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The bad parts:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;My machine is based on OSX so using Windows under the virtual machine &lt;strong&gt;drains too much battery&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;I &lt;strong&gt;wasted time&lt;/strong&gt; waiting to boot virtual machine&lt;/li&gt;
+&lt;li&gt;I &lt;strong&gt;wasted time&lt;/strong&gt; waiting to open Visual Studio&lt;/li&gt;
+&lt;li&gt;Every time I open the powershell script I need time to realize what the code means&lt;/li&gt;
+&lt;li&gt;I have to open Visual Studio for every minimal change (so Web Essential can update minified files) either JavaScript or CSS&lt;/li&gt;
+&lt;li&gt;It's not a usual development experience for a non-Microsoft developer&lt;/li&gt;
+&lt;li&gt;My project folder is &lt;strong&gt;overloaded&lt;/strong&gt; due to &lt;a href="https://github.com/rucka/gianluca.carucci.org/tree/v1.0"&gt;useless files from the Visual Studio project&lt;/a&gt; (*.sln, *.config, *.csproj, Properties folder)&lt;/li&gt;
+&lt;li&gt;Visual studio template referencing &lt;strong&gt;useless&lt;/strong&gt; (for my scope) client libraries&lt;/li&gt;
+&lt;li&gt;Client libraries versioning and management is a pain&lt;/li&gt;
+&lt;li&gt;My project is &lt;strong&gt;editor/ide dependent&lt;/strong&gt; so I cannot share it with other frontend  developers used to its tools&lt;/li&gt;
+&lt;li&gt;I need to &lt;strong&gt;manually&lt;/strong&gt; set up my dev environment before opening the project&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;hmmm... It seems I have too many &lt;strong&gt;technical debts&lt;/strong&gt; to make up...&lt;/p&gt;
+&lt;/div&gt;</content:encoded></item><item><title>reboot</title><description>&lt;div class="kg-card-markdown"&gt;&lt;p&gt;Five months are passed since I left Managed Designs (thanks to all people of &lt;a href="http://www.manageddesigns.it"&gt;bottega51&lt;/a&gt;!) and I'm back to be a Freelancer. Right away I realized I have more time to spend study new languages and technologies, play with my &lt;a href="https://twitter.com/e__mm__a"&gt;daughter&lt;/a&gt;, write and last but not least develop new projects&lt;/p&gt;&lt;/div&gt;</description><link>http://localhost:2368/reboot-2/</link><guid isPermaLink="false">59e4a44feb581d000190a37b</guid><category>life</category><dc:creator>Gianluca Carucci</dc:creator><pubDate>Mon, 05 May 2014 07:10:00 GMT</pubDate><content:encoded>&lt;div class="kg-card-markdown"&gt;&lt;p&gt;Five months are passed since I left Managed Designs (thanks to all people of &lt;a href="http://www.manageddesigns.it"&gt;bottega51&lt;/a&gt;!) and I'm back to be a Freelancer. Right away I realized I have more time to spend study new languages and technologies, play with my &lt;a href="https://twitter.com/e__mm__a"&gt;daughter&lt;/a&gt;, write and last but not least develop new projects (that I will speak about later).&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Hey stop It! I'm a freelancer, I need a new brand &lt;a href="http://gianluca.carucci.org"&gt;website&lt;/a&gt;, and I want it right now!&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;What's interesting about my &lt;a href="http://gianluca.carucci.org"&gt;website&lt;/a&gt; isn't marketing stuff (now you know it and it's enough), but share with you some technical considerations born during the development: we will take time to speak about it soon...&lt;/p&gt;
+&lt;/div&gt;</content:encoded></item></channel></rss>

@@ -1,0 +1,370 @@
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>enhance your frontend life using watch and livereload - reboot</title>
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="enhance your frontend life using watch and livereload">
+    <meta name="twitter:description" content="">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="enhance your frontend life using watch and livereload">
+    <meta property="og:description" content="">
+
+    <link href="../favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link href="http://localhost:3001/apple-touch-icon-precomposed.png" rel="apple-touch-icon">
+
+    <link rel="stylesheet" type="text/css" href="../assets/css/uno.css?v=b5ee7c5d54">
+
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="canonical" href="http://localhost:2368/enhance-your-frontend-life-with-grunt-watch-and-livereload-2/">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <link rel="amphtml" href="http://localhost:2368/enhance-your-frontend-life-with-grunt-watch-and-livereload-2/amp/">
+    
+    <meta property="og:site_name" content="reboot">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="enhance your frontend life using watch and livereload">
+    <meta property="og:description" content="This post is part of the series &amp;quot;the road to Visual Studio free frontend development&amp;quot;: Frontend life with Visual Studio Frontend life without Visual Studio Frontend life is easy with Grunt Manage frontend dependencies with npm and browserify Enhance your frontend life with grunt watch and livereload plugin">
+    <meta property="og:url" content="http://localhost:2368/enhance-your-frontend-life-with-grunt-watch-and-livereload-2/">
+    <meta property="article:published_time" content="2015-02-25T18:38:16.000Z">
+    <meta property="article:modified_time" content="2015-02-25T18:38:16.000Z">
+    <meta property="article:tag" content="grunt">
+    <meta property="article:tag" content="vsfree">
+    <meta property="article:tag" content="frontend development">
+    <meta property="article:tag" content="live-reload">
+    <meta property="article:tag" content="watch">
+    
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="enhance your frontend life using watch and livereload">
+    <meta name="twitter:description" content="This post is part of the series &amp;quot;the road to Visual Studio free frontend development&amp;quot;: Frontend life with Visual Studio Frontend life without Visual Studio Frontend life is easy with Grunt Manage frontend dependencies with npm and browserify Enhance your frontend life with grunt watch and livereload plugin">
+    <meta name="twitter:url" content="http://localhost:2368/enhance-your-frontend-life-with-grunt-watch-and-livereload-2/">
+    <meta name="twitter:label1" content="Written by">
+    <meta name="twitter:data1" content="Gianluca Carucci">
+    <meta name="twitter:label2" content="Filed under">
+    <meta name="twitter:data2" content="grunt, vsfree, frontend development, live-reload, watch">
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "reboot",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "http://localhost:2368/content/images/2017/10/logo.png",
+            "width": 122,
+            "height": 60
+        }
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Gianluca Carucci",
+        "image": {
+            "@type": "ImageObject",
+            "url": "http://gianluca.carucci.org/images/reboot/avatar.jpg",
+            "width": 333,
+            "height": 250
+        },
+        "url": "http://localhost:2368/author/gianluca-carucci/",
+        "sameAs": [
+            "http://gianluca.carucci.org"
+        ]
+    },
+    "headline": "enhance your frontend life using watch and livereload",
+    "url": "http://localhost:2368/enhance-your-frontend-life-with-grunt-watch-and-livereload-2/",
+    "datePublished": "2015-02-25T18:38:16.000Z",
+    "dateModified": "2015-02-25T18:38:16.000Z",
+    "keywords": "grunt, vsfree, frontend development, live-reload, watch",
+    "description": "This post is part of the series &amp;quot;the road to Visual Studio free frontend development&amp;quot;: Frontend life with Visual Studio Frontend life without Visual Studio Frontend life is easy with Grunt Manage frontend dependencies with npm and browserify Enhance your frontend life with grunt watch and livereload plugin",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "http://localhost:2368/"
+    }
+}
+    </script>
+
+    <script type="text/javascript" src="../public/ghost-sdk.min.js?v=b5ee7c5d54"></script>
+<script type="text/javascript">
+ghost.init({
+	clientId: "ghost-frontend",
+	clientSecret: "79f3dc471bf6"
+});
+</script>
+    <meta name="generator" content="Ghost 1.13">
+    <link rel="alternate" type="application/rss+xml" title="reboot" href="http://localhost:2368/rss/">
+    <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+              m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+                  ga('create', 'UA-39008722-5', 'auto');
+                    ga('send', 'pageview');
+
+                </script>
+</head>
+<body class="post-template tag-grunt tag-vsfree tag-frontend-development tag-live-reload tag-watch no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    <header class="panel-cover panel-cover--collapsed " style="background-image: url(../content/images/2017/10/background.jpg)">
+  <div class="panel-main">
+
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="http://reboot.carucci.org" title="link to homepage for reboot"><img src="../content/images/2017/10/logo.png" width="80" alt="reboot logo" class="panel-cover__logo logo"></a>
+        <h1 class="panel-cover__title panel-title"><a href="http://localhost:2368" title="link to homepage for reboot">reboot</a></h1>
+        <hr class="panel-cover__divider">
+        <p class="panel-cover__description">a (tech) life behind a keyboard</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary">
+
+        <div class="navigation-wrapper">
+
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="../index.html#blog" title="link to reboot blog" class="blog-button">Blog</a></li>
+            </ul>
+          </nav>
+
+          
+<nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+
+  <!-- Twitter -->
+  <li class="navigation__item">
+    <a target="blank" href="http://gianluca.carucci.org" title="rucka at home">
+      <i class="icon icon-web"></i>
+      <span class="label">Website</span>
+    </a>
+  </li>
+
+<li class="navigation__item">
+    <a target="blank" href="http://goo.gl/WCMqi5" title="@rucka on Twitter">
+      <i class="icon icon-social-twitter"></i>
+      <span class="label">Twitter</span>
+    </a>
+  </li>
+
+  <!-- Linkedin -->
+  <li class="navigation__item">
+    <a target="blank" href="http://goo.gl/pSWsZ8" title="Rucka on LinkedIn">
+      <i class="icon icon-social-linkedin"></i>
+      <span class="label">Linkedin</span>
+    </a>
+  </li>
+
+  <!-- Github -->
+  <li class="navigation__item">
+    <a target="blank" href="http://goo.gl/SzphrW" title="Rucka on Github">
+      <i class="icon icon-social-github"></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+
+    <!-- Email -->
+    <li class="navigation__item">
+      <a target="blank" href="mailto:hello.gianluca@carucci.org" title="Email me">
+        <i class="icon icon-mail"></i>
+        <span class="label">Email</span>
+      </a>
+    </li>
+
+    <!-- RSS -->
+    <li class="navigation__item">
+      <a href="../rss/index.rss" title="Subscribe">
+        <i class="icon icon-rss"></i>
+        <span class="label">RSS</span>
+      </a>
+    </li>
+
+  </ul>
+</nav>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            
+
+  <article class="post-container post-container--single">
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="25 Feb 2015" class="post-meta__date date">25 Feb 2015</time> • <span class="post-meta__tags tags"><span class="icon icon-pricetag-multiple">&amp;nbsp</span><a href="../tag/grunt/index.html#blog" title="grunt">grunt</a> <a href="../tag/vsfree/index.html#blog" title="vsfree">vsfree</a> <a href="../tag/frontend-development/index.html#blog" title="frontend development">frontend development</a> <a href="../tag/live-reload/index.html#blog" title="live-reload">live-reload</a> <a href="../tag/watch/index.html#blog" title="watch">watch</a> - <span class="eta"></span> read.</span>
+        <!--<span class="post-meta__author author"><img src="http://gianluca.carucci.org/images/reboot/avatar.jpg" alt="profile image for Gianluca Carucci" class="avatar post-meta__avatar" /> by Gianluca Carucci</span>-->
+      </div>
+      <h1 class="post-title">enhance your frontend life using watch and livereload</h1>
+    </header>
+
+    <section class="post tag-grunt tag-vsfree tag-frontend-development tag-live-reload tag-watch">
+      <div class="kg-card-markdown"><p><em>This post is part of the series "the road to Visual Studio free frontend development":</em></p>
+<ul>
+<li><em><a href="http://localhost:3001/frontend-life-with-visual-studio">Frontend life with Visual Studio</a></em></li>
+<li><em><a href="http://localhost:3001/frontend-life-without-visual-studio">Frontend life without Visual Studio</a></em></li>
+<li><em><a href="../frontend-life-is-easy-with-grunt.3">Frontend life is easy with Grunt</a></em></li>
+<li><em><a href="../manage-frontend-dependencies-with-npm-and-browserify.3">Manage frontend dependencies with npm and browserify</a></em></li>
+<li><em>Enhance your frontend life with grunt watch and livereload plugin</em></li>
+</ul>
+<p><em>You can browse the code of this post on <a href="https://github.com/rucka/gianluca.carucci.org/blob/v2.2">github</a>.</em></p>
+<hr>
+<p>In the previous posts I have configured Grunt and when I make a change to a source asset (JavaScript, HTML or CSS) I have to:</p>
+<ol>
+<li><strong>Save the change</strong> from the editor</li>
+<li><strong>Run the command</strong> <code>grunt</code> from the terminal</li>
+<li><strong>Refresh the browser</strong> page</li>
+</ol>
+<p>The goal of this post is to free myself from both steps 2 and 3.</p>
+<h4 id="watchmyassets">watch my assets</h4>
+<p>I start installing the right grunt plugin:</p>
+<pre><code>npm install grunt-contrib-watch --save-dev
+</code></pre>
+<p>and change the <code>Gruntfile.js</code>:</p>
+<pre><code>grunt.initConfig({  
+  //previous declarations...
+  watch: {
+            all: {
+                files: ['client/**'],
+                tasks: ['debug'],
+                options : {
+                    atBegin: true, 
+                    livereload:true
+                }
+            }
+        },
+          //next declarations...
+));
+
+//previous dependencies loaded ...
+grunt.loadNpmTasks('grunt-contrib-watch');  
+grunt.registerTask('debug',['clean','copy', 
+'browserify']);  
+grunt.registerTask('default',['watch']);  
+</code></pre>
+<p>Now I can <strong>modify the assets without worrying about running the task runner again</strong>, because <a href="https://github.com/gruntjs/grunt-contrib-watch"><code>watch</code></a> handles it for me (I feel grateful for that every day!).<br>
+As you see, I have registered a new <code>debug</code> (this is a copy of the old <code>default</code> task) task that will be lunched by <code>watch</code> when the content inside the <code>client</code> folder (the one that contains all my source assets) changes.<br>
+I want to run the <code>grunt</code> command only <strong>once</strong> after I start a developing session, so I have changed the default grunt task in order to watch my assets (you are free to change the default task if you want to manage your development workflow differently).</p>
+<h4 id="browserautorefresh">browser auto refresh</h4>
+<p>This is a great result but... I use two monitors, one for the code editor and the other one for the browser where the website is rendering during the development.<br>
+I'm just a little step away from the heaven: my last wish is: as soon as I save a file, I want that the browser refreshes; this feature is called <a href="http://livereload.com/"><strong>livereload</strong></a>.</p>
+<p>This goal is pretty simple to achieve: grunt has to run a <strong>livereload server</strong> which is triggered by a <strong>livereload client</strong> just when a file changes (this work is done by the <em>watch Grunt plugin</em>).<br>
+There are several <a href="https://github.com/gruntjs/grunt-contrib-watch/blob/master/docs/watch-examples.md#enabling-live-reload-in-your-html">ways</a> to configure livereload using watch; I chose to use the <a href="https://github.com/gruntjs/grunt-contrib-connect">connect plugin for Grunt</a>. So let's go and install it:</p>
+<pre><code>npm install grunt-contrib-connect --save-dev
+</code></pre>
+<p>In the watch configuration above, you might notice that a <code>livereload:true</code> option has been declared: this tells  grunt to <strong>trigger the livereload server</strong> after the task has been called by watch.<br>
+My Grunt connect plugin configuration follows below:</p>
+<pre><code>grunt.initConfig({  
+  //previous declarations...
+        connect: {
+            server: {
+                options: {
+                    hostname: '0.0.0.0',
+                    port: 8080,
+                    base: './publish',
+                    debug: true,
+                    livereload: true,
+                    keepalive: false 
+                }
+            }
+        },
+          //next declarations...
+));
+
+//previous dependencies loaded ...
+grunt.loadNpmTasks('grunt-contrib-connect');  
+grunt.registerTask('debug',['clean','copy', 
+'browserify']);  
+grunt.registerTask('default',['connect', 'watch']);  
+</code></pre>
+<p>Just a little note: I need to change the default task registration so that the <em>connect</em> task will is launched with watch.</p>
+<p><strong>That's all</strong>. I have shown only the options needed for my scope; you can find more details in the <a href="https://github.com/gruntjs/grunt-contrib-watch">watch</a> and <a href="https://github.com/gruntjs/grunt-contrib-connect">connect</a> documentations.</p>
+<p>After a long setup, I reach how is simple and intuitive the development without worrying about all the work activities different from functional requirements.<br>
+At the end my frontend developing life is only about choosing my favorite editor, coding during the workday and going to the pub at the end of the day:</p>
+<center>**what a great developer experience!**</center>
+</div>
+    </section>
+
+            <footer class="post-footer">
+
+
+            <figure class="author-image">
+                <a class="img" href="../author/gianluca-carucci/" style="background-image: url(http://gianluca.carucci.org/images/reboot/avatar.jpg)"><span class="hidden">Gianluca Carucci's Picture</span></a>
+            </figure>
+
+            <section class="author">
+                <h4><a href="../author/gianluca-carucci/">Gianluca Carucci</a></h4>
+
+                    <p>Software Engineer. Waterpolo player. Dad. Web  guy.</p>
+                <div class="author-meta">
+                    <span class="author-location icon icon-map">Milan</span>
+                    <span class="author-link icon icon-link"><a href="http://gianluca.carucci.org">http://gianluca.carucci.org</a></span>
+                </div>
+            </section>
+
+
+            <section class="share">
+                <h4>Share this post</h4>
+                <a class="icon icon-social-twitter" href="https://twitter.com/share?text=enhance%20your%20frontend%20life%20using%20watch%20and%20livereload&amp;url=http://reboot.carucci.org/enhance-your-frontend-life-with-grunt-watch-and-livereload-2/" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <span class="hidden">Twitter</span>
+                </a>
+                <a class="icon icon-social-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://reboot.carucci.org/enhance-your-frontend-life-with-grunt-watch-and-livereload-2/" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <span class="hidden">Facebook</span>
+                </a>
+                <a class="icon icon-social-google-plus" href="https://plus.google.com/share?url=http://reboot.carucci.org/enhance-your-frontend-life-with-grunt-watch-and-livereload-2/" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <span class="hidden">Google+</span>
+                </a>
+            </section>
+  </footer></article>
+
+  <section class="post-comments">
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+      var disqus_shortname = 'reboot-carucci-org'; // required: replace example with your forum shortname
+      /* * * DON'T EDIT BELOW THIS LINE * * */
+      (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
+
+
+
+            <footer class="footer">
+    <span class="footer__copyright" style="float:left">© 2017. <a href="http://gianluca.carucci.org">Gianluca Carucci</a>. All rights reserved.</span>
+    <span class="footer__copyright" style="float:right">Proudly published with <a href="http://ghost.org" title="link to Ghost website">Ghost</a></span>
+</footer>
+        </div>
+    </div>
+
+    <!-- You can safely delete this line if your theme does not require jQuery -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+    <script type="text/javascript" src="../assets/js/main.js?v=b5ee7c5d54"></script>
+
+</body>
